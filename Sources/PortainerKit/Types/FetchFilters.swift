@@ -13,8 +13,8 @@ public struct FetchFilters: Codable, Sendable {
 	public var status: [String]?
 	public var before: [String]?
 	public var since: [String]?
-
-	public init() { }
+	public var endpointID: Endpoint.ID?
+	public var includeOrphanedStacks: Bool?
 
 	public init(
 		id: [String]? = nil,
@@ -22,7 +22,9 @@ public struct FetchFilters: Codable, Sendable {
 		label: [String]? = nil,
 		status: [String]? = nil,
 		before: [String]? = nil,
-		since: [String]? = nil
+		since: [String]? = nil,
+		endpointID: Endpoint.ID? = nil,
+		includeOrphanedStacks: Bool? = nil
 	) {
 		self.id = id
 		self.name = name
@@ -30,5 +32,7 @@ public struct FetchFilters: Codable, Sendable {
 		self.status = status
 		self.before = before
 		self.since = since
+		self.endpointID = endpointID
+		self.includeOrphanedStacks = includeOrphanedStacks
 	}
 }

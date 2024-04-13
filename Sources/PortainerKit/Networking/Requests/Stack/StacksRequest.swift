@@ -6,11 +6,15 @@
 //  Copyright © 2024 shameful. All rights reserved.
 //
 
+import Foundation
 import NetworkKit
 
 // MARK: - StacksRequest
 
-struct StacksRequest { }
+struct StacksRequest {
+	var endpointID: Endpoint.ID?
+	var includeOrphanedStacks = true
+}
 
 // MARK: - StacksRequest+APIRequest
 
@@ -19,4 +23,18 @@ extension StacksRequest: NetworkRequest {
 
 	var method: HTTPMethod { .get }
 	var path: String { "/api/stacks" }
+
+	func queryItems() throws -> [URLQueryItem]? {
+		let filters = FetchFilters(
+			endpointID: endpointID,
+			includeOrphanedStacks: includeOrphanedStacks
+		)
+
+		let filtersEncoded = try PortainerClient.jsonEncoder.encode(filters)
+		guard let filtersQuery = String(data: filtersEncoded, encoding: .utf8) else {
+			throw PortainerClient.Error.encodingFailed
+		}
+
+		return [.init(name: "filters", value: filtersQuery)]
+	}
 }

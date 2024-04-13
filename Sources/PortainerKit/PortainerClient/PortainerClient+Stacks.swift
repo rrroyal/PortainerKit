@@ -11,10 +11,13 @@ import Foundation
 public extension PortainerClient {
 	/// Lists all stacks based on the current user authorizations.
 	/// Will return all stacks if using an administrator account otherwise it will only return the list of stacks the user have access to.
-	/// - Returns: `[Stack]`
+	/// - Parameters:
+	///   - endpointID: Fetch stacks for this endpoint ID
+	///   - includeOrphaned: Include orphaned stacks?
+	/// - Returns: `[Stack]` list
 	@Sendable
-	func fetchStacks() async throws -> [Stack] {
-		let request = StacksRequest()
+	func fetchStacks(endpointID: Endpoint.ID? = nil, includeOrphaned: Bool = true) async throws -> [Stack] {
+		let request = StacksRequest(endpointID: endpointID, includeOrphanedStacks: includeOrphaned)
 		let response = try await send(request)
 		return response
 	}

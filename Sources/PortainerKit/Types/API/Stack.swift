@@ -33,18 +33,18 @@ public struct Stack: Identifiable, Equatable, Codable, Sendable {
 	public let endpointID: Int
 
 	/// A list of environment(endpoint) variables used during stack deployment
-	public let env: [EnvironmentEntry]
+	public let env: [EnvironmentEntry]?
 
 	/// Stack status (1 - active, 2 - inactive)
-	public var status: Status
+	public var status: Status?
 
 	public init(
 		id: Int,
 		name: String,
 		type: StackType,
 		endpointID: Int,
-		env: [EnvironmentEntry],
-		status: Status
+		env: [EnvironmentEntry]? = nil,
+		status: Status? = nil
 	) {
 		self.id = id
 		self.name = name
@@ -77,7 +77,7 @@ public extension Stack {
 // MARK: - Stack+EnvironmentEntry
 
 public extension Stack {
-	struct EnvironmentEntry: Equatable, Codable, Sendable {
+	struct EnvironmentEntry: Equatable, Codable, Sendable, Hashable {
 		public let name: String
 		public let value: String
 

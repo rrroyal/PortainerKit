@@ -48,7 +48,6 @@ final class OfflineTests: XCTestCase {
 			ContainerLogsRequest(containerID: containerID, endpointID: endpointID, stdout: true, tailAmount: 100),
 			ContainersRequest(endpointID: endpointID, filters: .init(name: ["some_container"])),
 			EndpointsRequest(),
-			StackSetStatusRequest(stackID: stackID, started: true, endpointID: endpointID),
 			StackDeployRequest(
 				endpointID: endpointID,
 				settings: StackDeployment.DeploymentSettings.StandaloneString(
@@ -60,6 +59,9 @@ final class OfflineTests: XCTestCase {
 				)
 			),
 			StackDetailsRequest(stackID: stackID),
+			StackFileRequest(stackID: stackID),
+			StackRemoveRequest(stackID: stackID, endpointID: endpointID),
+			StackSetStatusRequest(stackID: stackID, started: true, endpointID: endpointID),
 			StacksRequest()
 		]
 

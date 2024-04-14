@@ -55,9 +55,26 @@ public extension PortainerClient {
 		return response
 	}
 
+	/// Deploys a new stack to endpoint with specified `endpointID` with provided `settings`.
+	/// - Parameters:
+	///   - endpointID: Endpoint identifier
+	///   - settings: Deployment settings
+	/// - Returns: Newly created `Stack`
+	@Sendable
 	func deployStack(endpointID: Endpoint.ID, settings: some StackDeploymentSettings) async throws -> Stack {
 		let request = StackDeployRequest(endpointID: endpointID, settings: settings)
 		let response = try await send(request)
 		return response
+	}
+
+	/// Removes a stack with specified `stackID`.
+	/// - Parameters:
+	///   - stackID: Stack ID to remove
+	///   - endpointID: Endpoint identifier
+	///   - external: Is this stack external?
+	@Sendable
+	func removeStack(stackID: Stack.ID, endpointID: Endpoint.ID, external: Bool = false) async throws {
+		let request = StackRemoveRequest(stackID: stackID, endpointID: endpointID, external: external)
+		_ = try await send(request)
 	}
 }

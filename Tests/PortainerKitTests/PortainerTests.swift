@@ -3,7 +3,7 @@ import XCTest
 
 final class PortainerTests: XCTestCase {
 	// swiftlint:disable:next force_unwrapping
-	let portainerClient = PortainerClient(serverURL: URL(string: "http://localhost:9443")!, token: "")
+	let portainerClient = PortainerClient(serverURL: URL(string: "https://localhost:9443/portainer")!, token: "")
 	let endpointID: Endpoint.ID = 0
 	let containerID: Container.ID = ""
 	let stackID: Stack.ID = 0
@@ -85,6 +85,16 @@ services:
 		)
 		let response = try await portainerClient.deployStack(endpointID: endpointID, settings: settings)
 		print("[*] Stack Deployment: \"\(response.name)\" (\(response.id))")
+	}
+
+	func testStackRemove() async throws {
+		do {
+			try await portainerClient.removeStack(stackID: stackID, endpointID: endpointID)
+			print("[*] Removed stack with ID: \"\(stackID)\"")
+		} catch {
+			print("[!] Failed to remove stack with ID: \"\(stackID)\": \(error)")
+			throw error
+		}
 	}
 
 	func testStacks() async throws {

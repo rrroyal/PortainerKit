@@ -15,5 +15,17 @@ public extension StackDeployment.DeploymentSettings {
 		public var fromAppTemplate: Bool?
 		public var name: String
 		public var stackFileContent: String
+
+		public init(
+			env: [Stack.EnvironmentEntry] = [],
+			fromAppTemplate: Bool? = nil,
+			name: String,
+			stackFileContent: String
+		) {
+			self.env = env
+			self.fromAppTemplate = fromAppTemplate
+			self.name = name
+			self.stackFileContent = stackFileContent
+		}
 	}
 }

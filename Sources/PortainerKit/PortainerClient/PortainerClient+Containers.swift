@@ -54,7 +54,7 @@ public extension PortainerClient {
 	@Sendable
 	func executeContainerAction(_ action: ContainerAction, containerID: Container.ID, endpointID: Endpoint.ID) async throws {
 		let request = ContainerActionRequest(containerID: containerID, endpointID: endpointID, action: action)
-		_ = try await send(request) // It doesn't return anything, but the compiler doesn't know it
+		_ = try await send(request)
 	}
 
 	/// Fetches stdout and stderr logs from a container.

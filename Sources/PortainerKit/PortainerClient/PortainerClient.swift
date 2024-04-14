@@ -16,36 +16,10 @@ public class PortainerClient: @unchecked Sendable {
 
 	// MARK: Static Properties
 
+	private static let jsonDecoder = JSONDecoder.portainer
+	private static let jsonEncoder = JSONEncoder.portainer
+
 	internal static let bundleIdentifier = Bundle.main.bundleIdentifier ?? "xyz.shameful.PortainerKit"
-
-	internal static let jsonDecoder: JSONDecoder = {
-		let decoder = JSONDecoder()
-		decoder.dateDecodingStrategy = .custom { decoder -> Date in
-			let dateFormatter = ISO8601DateFormatter()
-
-			let container = try decoder.singleValueContainer()
-			do {
-				let str = try container.decode(String.self)
-
-				dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-				if let date = dateFormatter.date(from: str) { return date }
-
-				dateFormatter.formatOptions = [.withInternetDateTime]
-				if let date = dateFormatter.date(from: str) { return date }
-
-				throw DateError.invalidDate(dateString: str)
-			} catch {
-				if error is DecodingError {
-					let number = try container.decode(TimeInterval.self)
-					return Date(timeIntervalSince1970: number)
-				}
-
-				throw error
-			}
-		}
-		return decoder
-	}()
-	internal static let jsonEncoder = JSONEncoder()
 
 	// MARK: Internal Properties
 

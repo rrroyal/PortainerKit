@@ -22,7 +22,7 @@ final class PortainerTests: XCTestCase {
 
 	func testContainerDetails() async throws {
 		let response = try await portainerClient.fetchContainerDetails(for: containerID, endpointID: endpointID)
-		print("[*] Container: \(response.name) (\(response.id))")
+		print("[*] Container: \"\(response.name)\" (\(response.id))")
 	}
 
 	func testContainerLogs() async throws {
@@ -47,11 +47,6 @@ final class PortainerTests: XCTestCase {
 		print("[*] Endpoints (\(response.count)): \(response.map { $0.name ?? "nil" })")
 	}
 
-	func testPortainerStatus() async throws {
-		let response = try await portainerClient.fetchPortainerStatus()
-		print("[*] Portainer status: \(response)")
-	}
-
 	func testStackAction() async throws {
 		let started = true
 
@@ -66,7 +61,30 @@ final class PortainerTests: XCTestCase {
 
 	func testStackDetails() async throws {
 		let response = try await portainerClient.fetchStackDetails(stackID: stackID)
-		print("[*] Stack: \(response.name) (\(response.id))")
+		print("[*] Stack: \"\(response.name)\" (\(response.id))")
+	}
+
+	func testStackDeployment() async throws {
+		let containerName = "plex2"
+		// swiftlint:disable all
+		let stackFileContent = """
+version: "3.9"
+services:
+  \(containerName):
+    image: "linuxserver/plex:latest"
+    container_name: "\(containerName)"
+    network_mode: host
+    restart: unless-stopped
+    labels:
+      xyz.shameful.harbour.association_id: "\(containerName)"
+""".trimmingCharacters(in: .whitespacesAndNewlines).replacing("\t", with: "  ")
+		// swiftlint:enable all
+		let settings = StackDeployment.DeploymentSettings.StandaloneString(
+			name: "test_plex",
+			stackFileContent: stackFileContent
+		)
+		let response = try await portainerClient.deployStack(endpointID: endpointID, settings: settings)
+		print("[*] Stack Deployment: \"\(response.name)\" (\(response.id))")
 	}
 
 	func testStacks() async throws {

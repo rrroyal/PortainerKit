@@ -26,13 +26,13 @@ extension ContainersRequest: NetworkRequest {
 	var method: HTTPMethod { .get }
 	var path: String { "/api/endpoints/\(endpointID)/docker/containers/json" }
 
-	func queryItems() throws -> [URLQueryItem]? {
+	func makeQueryItems() throws -> [URLQueryItem]? {
 		var queryItems: [URLQueryItem] = [
 			.init(name: "all", value: "\(all ? "true" : "false")")
 		]
 
 		if let filters {
-			let filtersEncoded = try PortainerClient.jsonEncoder.encode(filters)
+			let filtersEncoded = try JSONEncoder.portainer.encode(filters)
 			guard let queryItemString = String(data: filtersEncoded, encoding: .utf8) else {
 				throw PortainerClient.Error.encodingFailed
 			}

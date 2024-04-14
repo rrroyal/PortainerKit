@@ -18,7 +18,7 @@ struct ContainerActionRequest {
 	var signal: String?
 }
 
-// MARK: - ContainerActionRequest+APIRequest
+// MARK: - ContainerActionRequest+NetworkRequest
 
 extension ContainerActionRequest: NetworkRequest {
 	typealias DecodedResponse = Never?
@@ -26,7 +26,7 @@ extension ContainerActionRequest: NetworkRequest {
 	var method: HTTPMethod { .post }
 	var path: String { "/api/endpoints/\(endpointID)/docker/containers/\(containerID)/\(action.rawValue)" }
 
-	func queryItems() throws -> [URLQueryItem]? {
+	func makeQueryItems() throws -> [URLQueryItem]? {
 		var queryItems: [URLQueryItem] = []
 
 		if let signal {

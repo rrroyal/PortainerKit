@@ -3,7 +3,7 @@
 //  PortainerKit
 //
 //  Created by royal on 06/06/2023.
-//  Copyright © 2023 shameful. All rights reserved.
+//  Copyright © 2024 shameful. All rights reserved.
 //
 
 import Foundation
@@ -61,6 +61,7 @@ public extension Stack {
 	enum StackType: Int, Equatable, Codable, Sendable {
 		case swarm = 1
 		case dockerCompose = 2
+		case kubernetes = 3
 	}
 }
 
@@ -84,5 +85,11 @@ public extension Stack {
 			self.name = name
 			self.value = value
 		}
+	}
+}
+
+extension [Stack.EnvironmentEntry]: ExpressibleByDictionaryLiteral {
+	public init(dictionaryLiteral elements: (String, String)...) {
+		self = elements.map { .init(name: $0, value: $1) }
 	}
 }

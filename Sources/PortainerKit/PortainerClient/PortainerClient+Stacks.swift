@@ -40,7 +40,23 @@ public extension PortainerClient {
 	/// - Returns: Affected `Stack`, or nil if not modified
 	@Sendable
 	func setStackStatus(stackID: Stack.ID, started: Bool, endpointID: Endpoint.ID) async throws -> Stack? {
-		let request = SetStackStatusRequest(stackID: stackID, started: started, endpointID: endpointID)
+		let request = StackSetStatusRequest(stackID: stackID, started: started, endpointID: endpointID)
+		let response = try await send(request)
+		return response
+	}
+
+	/// Fetches the Docker Compose file contents for specified stack ID.
+	/// - Parameter stackID: Stack ID to fetch the Docker Compose file contents for
+	/// - Returns: Docker Compose file contents
+	@Sendable
+	func fetchStackFile(stackID: Stack.ID) async throws -> String {
+		let request = StackFileRequest(stackID: stackID)
+		let response = try await send(request)
+		return response
+	}
+
+	func deployStack(endpointID: Endpoint.ID, settings: some StackDeploymentSettings) async throws -> Stack {
+		let request = StackDeployRequest(endpointID: endpointID, settings: settings)
 		let response = try await send(request)
 		return response
 	}

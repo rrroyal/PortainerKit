@@ -33,7 +33,7 @@ final class OfflineTests: XCTestCase {
 		}
 
 		if let headers = request.allHTTPHeaderFields, !headers.isEmpty {
-			description.append("Headers:\t\t\(headers)")
+			description.append("Headers:\t\(headers)")
 		}
 
 		return description.joined(separator: "\n")
@@ -48,8 +48,17 @@ final class OfflineTests: XCTestCase {
 			ContainerLogsRequest(containerID: containerID, endpointID: endpointID, stdout: true, tailAmount: 100),
 			ContainersRequest(endpointID: endpointID, filters: .init(name: ["some_container"])),
 			EndpointsRequest(),
-			PortainerStatusRequest(),
-			SetStackStatusRequest(stackID: stackID, started: true, endpointID: endpointID),
+			StackSetStatusRequest(stackID: stackID, started: true, endpointID: endpointID),
+			StackDeployRequest(
+				endpointID: endpointID,
+				settings: StackDeployment.DeploymentSettings.StandaloneString(
+					env: [
+						"KEY": "VALUE"
+					],
+					name: "stackName",
+					stackFileContent: "stackFileContent"
+				)
+			),
 			StackDetailsRequest(stackID: stackID),
 			StacksRequest()
 		]

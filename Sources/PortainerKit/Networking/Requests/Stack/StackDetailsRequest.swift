@@ -15,7 +15,7 @@ struct StackDetailsRequest {
 	var stackID: Stack.ID
 }
 
-// MARK: - StackDetailsRequest+APIRequest
+// MARK: - StackDetailsRequest+NetworkRequest
 
 extension StackDetailsRequest: NetworkRequest {
 	typealias DecodedResponse = Stack

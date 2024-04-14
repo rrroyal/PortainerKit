@@ -12,7 +12,7 @@ import NetworkKit
 
 struct EndpointsRequest { }
 
-// MARK: - EndpointsRequest+APIRequest
+// MARK: - EndpointsRequest+NetworkRequest
 
 extension EndpointsRequest: NetworkRequest {
 	typealias DecodedResponse = [Endpoint]

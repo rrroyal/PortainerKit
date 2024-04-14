@@ -1,5 +1,5 @@
 //
-//  SetStackStatusRequest.swift
+//  StackSetStatusRequest.swift
 //  PortainerKit
 //
 //  Created by royal on 04/04/2024.
@@ -9,23 +9,23 @@
 import Foundation
 import NetworkKit
 
-// MARK: - SetStackStatusRequest
+// MARK: - StackSetStatusRequest
 
-struct SetStackStatusRequest {
+struct StackSetStatusRequest {
 	var stackID: Stack.ID
 	var started: Bool
 	var endpointID: Endpoint.ID
 }
 
-// MARK: - SetStackStatusRequest+APIRequest
+// MARK: - StackSetStatusRequest+NetworkRequest
 
-extension SetStackStatusRequest: NetworkRequest {
+extension StackSetStatusRequest: NetworkRequest {
 	typealias DecodedResponse = Stack
 
 	var method: HTTPMethod { .post }
 	var path: String { "/api/stacks/\(stackID)/\(started ? "start" : "stop")" }
 
-	func queryItems() throws -> [URLQueryItem]? {
+	func makeQueryItems() throws -> [URLQueryItem]? {
 		[.init(name: "endpointId", value: "\(endpointID)")]
 	}
 }

@@ -48,7 +48,7 @@ extension ContainerLogsRequest: NetworkRequest {
 	var method: HTTPMethod { .get }
 	var path: String { "/api/endpoints/\(endpointID)/docker/containers/\(containerID)/logs" }
 
-	func queryItems() throws -> [URLQueryItem]? {
+	func makeQueryItems() throws -> [URLQueryItem]? {
 		var queryItems: [URLQueryItem] = [
 			.init(name: "stderr", value: (stderr ?? false) ? "1" : "0"),
 			.init(name: "stdout", value: (stdout ?? false) ? "1" : "0")

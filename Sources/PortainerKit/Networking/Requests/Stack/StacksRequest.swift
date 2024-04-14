@@ -16,7 +16,7 @@ struct StacksRequest {
 	var includeOrphanedStacks = true
 }
 
-// MARK: - StacksRequest+APIRequest
+// MARK: - StacksRequest+NetworkRequest
 
 extension StacksRequest: NetworkRequest {
 	typealias DecodedResponse = [Stack]
@@ -24,13 +24,13 @@ extension StacksRequest: NetworkRequest {
 	var method: HTTPMethod { .get }
 	var path: String { "/api/stacks" }
 
-	func queryItems() throws -> [URLQueryItem]? {
+	func makeQueryItems() throws -> [URLQueryItem]? {
 		let filters = FetchFilters(
 			endpointID: endpointID,
 			includeOrphanedStacks: includeOrphanedStacks
 		)
 
-		let filtersEncoded = try PortainerClient.jsonEncoder.encode(filters)
+		let filtersEncoded = try JSONEncoder.portainer.encode(filters)
 		guard let filtersQuery = String(data: filtersEncoded, encoding: .utf8) else {
 			throw PortainerClient.Error.encodingFailed
 		}

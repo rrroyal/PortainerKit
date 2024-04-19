@@ -19,7 +19,7 @@ public class PortainerClient: @unchecked Sendable {
 	private static let jsonDecoder = JSONDecoder.portainer
 	private static let jsonEncoder = JSONEncoder.portainer
 
-	internal static let bundleIdentifier = Bundle.main.bundleIdentifier ?? "xyz.shameful.PortainerKit"
+	internal static let bundleIdentifier = "xyz.shameful.PortainerKit"
 
 	// MARK: Internal Properties
 

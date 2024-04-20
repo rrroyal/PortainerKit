@@ -39,8 +39,8 @@ public extension PortainerClient {
 	///   - endpointID: Endpoint identifier
 	/// - Returns: Affected `Stack`, or nil if not modified
 	@Sendable
-	func setStackStatus(stackID: Stack.ID, started: Bool, endpointID: Endpoint.ID) async throws -> Stack? {
-		let request = StackSetStatusRequest(stackID: stackID, started: started, endpointID: endpointID)
+	func setStackState(stackID: Stack.ID, started: Bool, endpointID: Endpoint.ID) async throws -> Stack? {
+		let request = StackSetStateRequest(stackID: stackID, started: started, endpointID: endpointID)
 		let response = try await send(request)
 		return response
 	}

@@ -1,5 +1,5 @@
 //
-//  StackSetStatusRequest.swift
+//  StackSetStateRequest.swift
 //  PortainerKit
 //
 //  Created by royal on 04/04/2024.
@@ -9,17 +9,17 @@
 import Foundation
 import NetworkKit
 
-// MARK: - StackSetStatusRequest
+// MARK: - StackSetStateRequest
 
-struct StackSetStatusRequest {
+struct StackSetStateRequest {
 	var stackID: Stack.ID
 	var started: Bool
 	var endpointID: Endpoint.ID
 }
 
-// MARK: - StackSetStatusRequest+NetworkRequest
+// MARK: - StackSetStateRequest+NetworkRequest
 
-extension StackSetStatusRequest: NetworkRequest {
+extension StackSetStateRequest: NetworkRequest {
 	typealias DecodedResponse = Stack
 
 	var method: HTTPMethod { .post }

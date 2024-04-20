@@ -61,7 +61,7 @@ final class OfflineTests: XCTestCase {
 			StackDetailsRequest(stackID: stackID),
 			StackFileRequest(stackID: stackID),
 			StackRemoveRequest(stackID: stackID, endpointID: endpointID),
-			StackSetStatusRequest(stackID: stackID, started: true, endpointID: endpointID),
+			StackSetStateRequest(stackID: stackID, started: true, endpointID: endpointID),
 			StacksRequest()
 		]
 

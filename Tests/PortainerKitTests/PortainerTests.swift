@@ -51,7 +51,7 @@ final class PortainerTests: XCTestCase {
 		let started = true
 
 		do {
-			let stack = try await portainerClient.setStackStatus(stackID: stackID, started: started, endpointID: endpointID)
+			let stack = try await portainerClient.setStackState(stackID: stackID, started: started, endpointID: endpointID)
 			print("[*] Action \"\(started)\" succeeded: \(String(describing: stack))")
 		} catch {
 			print("[!] Action \"\(started)\" failed: \(error)")
@@ -85,6 +85,18 @@ services:
 		)
 		let response = try await portainerClient.deployStack(endpointID: endpointID, settings: settings)
 		print("[*] Stack Deployment: \"\(response.name)\" (\(response.id))")
+	}
+
+	func testStackSetState() async throws {
+		let started = true
+
+		do {
+			print("[*] Setting the state: \(started) for the stack with ID: \"\(stackID)\"")
+			_ = try await portainerClient.setStackState(stackID: stackID, started: started, endpointID: endpointID)
+		} catch {
+			print("[!] Failed to set the state for the stack with ID: \"\(stackID)\": \(error)")
+			throw error
+		}
 	}
 
 	func testStackRemove() async throws {

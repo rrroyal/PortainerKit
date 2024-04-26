@@ -34,7 +34,7 @@ public struct Container: Identifiable, Codable, Sendable {
 	public let created: Date?
 	public let ports: [Port]?
 	public let labels: [String: String]?
-	public var state: ContainerState?
+	public var state: Container.State?
 	public let status: String?
 	public let networkSettings: NetworkSettings?
 	public let mounts: [Mount]?
@@ -48,7 +48,7 @@ public struct Container: Identifiable, Codable, Sendable {
 		created: Date? = nil,
 		ports: [Port]? = nil,
 		labels: [String: String]? = nil,
-		state: ContainerState? = nil,
+		state: Container.State? = nil,
 		status: String? = nil,
 		networkSettings: NetworkSettings? = nil,
 		mounts: [Mount]? = nil
@@ -77,11 +77,25 @@ public struct Container: Identifiable, Codable, Sendable {
 //		self.created = try container.decodeIfPresent(Date.self, forKey: .created)
 //		self.ports = try container.decodeIfPresent([Port].self, forKey: .ports)
 //		self.labels = try container.decodeIfPresent([String : String].self, forKey: .labels)
-//		self.state = try container.decodeIfPresent(ContainerState.self, forKey: .state)
+//		self.state = try container.decodeIfPresent(Container.State.self, forKey: .state)
 //		self.status = try container.decodeIfPresent(String.self, forKey: .status)
 //		self.networkSettings = try container.decodeIfPresent(Container.NetworkSettings.self, forKey: .networkSettings)
 //		self.mounts = try container.decodeIfPresent([Mount].self, forKey: .mounts)
 //	}
+}
+
+// MARK: - Container+State
+
+public extension Container {
+	enum State: String, Codable, Sendable, Equatable {
+		case created
+		case running
+		case paused
+		case restarting
+		case removing
+		case exited
+		case dead
+	}
 }
 
 // MARK: - Container+NetworkSettings

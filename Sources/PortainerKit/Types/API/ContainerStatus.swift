@@ -22,7 +22,7 @@ public struct ContainerStatus: Codable, Sendable, Equatable {
 		case finishedAt = "FinishedAt"
 	}
 
-	public let state: ContainerState
+	public let state: Container.State
 	public let running: Bool
 	public let paused: Bool
 	public let restarting: Bool
@@ -34,7 +34,7 @@ public struct ContainerStatus: Codable, Sendable, Equatable {
 	public let finishedAt: Date?
 
 	public init(
-		state: ContainerState,
+		state: Container.State,
 		running: Bool,
 		paused: Bool,
 		restarting: Bool,

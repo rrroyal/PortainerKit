@@ -8,7 +8,7 @@
 
 // MARK: - Endpoint
 
-public struct Endpoint: Identifiable, Equatable, Codable, Sendable {
+public struct Endpoint: Codable, Equatable, Hashable, Identifiable, Sendable {
 	public typealias Name = String
 
 	enum CodingKeys: String, CodingKey {

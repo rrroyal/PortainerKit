@@ -41,7 +41,7 @@ extension ContainerActionRequest: NetworkRequest {
 			throw PortainerClient.Error.invalidResponse
 		}
 
-		if response.statusCode == 204 || response.statusCode == 304 {
+		if (200..<400) ~= response.statusCode {
 			// Container already has the specified state
 			return nil
 		} else {

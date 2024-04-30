@@ -3,9 +3,9 @@ import XCTest
 
 final class PortainerTests: XCTestCase {
 	// swiftlint:disable:next force_unwrapping
-	let portainerClient = PortainerClient(serverURL: URL(string: "https://localhost:9443/portainer")!, token: "")
+	let portainerClient = PortainerClient(serverURL: URL(string: "http://localhost:8080")!, token: "")
 	let endpointID: Endpoint.ID = 0
-	let containerID: Container.ID = ""
+	let containerID: Container.ID = "0"
 	let stackID: Stack.ID = 0
 
 	func testContainerAction() async throws {

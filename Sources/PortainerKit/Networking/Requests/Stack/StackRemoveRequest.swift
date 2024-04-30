@@ -42,7 +42,7 @@ extension StackRemoveRequest: NetworkRequest {
 			throw PortainerClient.Error.invalidResponse
 		}
 
-		if response.statusCode == 204 || response.statusCode == 304 {
+		if (200..<400) ~= response.statusCode {
 			return nil
 		} else {
 			throw PortainerClient.Error.responseCodeUnacceptable(response.statusCode)

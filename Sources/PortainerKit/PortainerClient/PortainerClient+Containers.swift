@@ -89,6 +89,23 @@ public extension PortainerClient {
 		return result
 	}
 
+	/// Remove a container.
+	/// - Parameters:
+	///   - containerID: Container ID to remove
+	///   - endpointID: ID of the endpoint with specified `containerID`
+	///   - removeVolumes: Remove the volumes associated with the container
+	///   - force: If the container is running, kill it before removing it
+	@Sendable
+	func removeContainer(
+		containerID: Container.ID,
+		endpointID: Endpoint.ID,
+		removeVolumes: Bool = false,
+		force: Bool = false
+	) async throws {
+		let request = ContainerRemoveRequest(containerID: containerID, endpointID: endpointID, removeVolumes: removeVolumes, force: force)
+		_ = try await send(request)
+	}
+
 	/// Attaches to a container to read its output or send it input. You can attach to the same container multiple times and you can reattach to containers that have been detached.
 	/// Either the stream or logs parameter must be true for this endpoint to do anything.
 	/// See the documentation for the docker attach command for more details.

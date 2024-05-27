@@ -22,12 +22,12 @@ public extension PortainerClient {
 		return response
 	}
 
-	/// Fetches the details for specified stack ID.
-	/// - Parameter stackID: Stack ID to fetch the details for
-	/// - Returns: `Stack` details
+	/// Fetches the stack with specified ID.
+	/// - Parameter stackID: Stack ID
+	/// - Returns: `Stack`
 	@Sendable
-	func fetchStackDetails(stackID: Stack.ID) async throws -> Stack {
-		let request = StackDetailsRequest(stackID: stackID)
+	func fetchStack(id stackID: Stack.ID) async throws -> Stack {
+		let request = StackRequest(stackID: stackID)
 		let response = try await send(request)
 		return response
 	}
@@ -52,7 +52,7 @@ public extension PortainerClient {
 	func fetchStackFile(stackID: Stack.ID) async throws -> String {
 		let request = StackFileRequest(stackID: stackID)
 		let response = try await send(request)
-		return response
+		return response.stackFileContent
 	}
 
 	/// Deploys a new stack to endpoint with specified `endpointID` with provided `settings`.

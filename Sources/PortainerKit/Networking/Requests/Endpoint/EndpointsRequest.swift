@@ -15,7 +15,7 @@ struct EndpointsRequest { }
 // MARK: - EndpointsRequest+NetworkRequest
 
 extension EndpointsRequest: NetworkRequest {
-	typealias DecodedResponse = [Endpoint]
+	typealias ResponseBody = [Endpoint]
 
 	var method: HTTPMethod { .get }
 	var path: String { "/api/endpoints" }

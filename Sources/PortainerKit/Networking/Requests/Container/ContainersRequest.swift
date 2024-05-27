@@ -21,25 +21,25 @@ struct ContainersRequest {
 // MARK: - ContainersRequest+NetworkRequest
 
 extension ContainersRequest: NetworkRequest {
-	typealias DecodedResponse = [Container]
+	typealias ResponseBody = [Container]
 
 	var method: HTTPMethod { .get }
 	var path: String { "/api/endpoints/\(endpointID)/docker/containers/json" }
 
-	func makeQueryItems() throws -> [URLQueryItem]? {
-		var queryItems: [URLQueryItem] = [
-			.init(name: "all", value: "\(all ? "true" : "false")")
-		]
+	var queryItems: [URLQueryItem]? {
+		get throws {
+			var queryItems: [URLQueryItem] = [
+				.init(name: "all", value: "\(all ? "true" : "false")")
+			]
 
-		if let filters {
-			let filtersEncoded = try JSONEncoder.portainer.encode(filters)
-			guard let queryItemString = String(data: filtersEncoded, encoding: .utf8) else {
-				throw PortainerClient.Error.encodingFailed
+			if let filters {
+				let filtersEncoded = try JSONEncoder.portainer.encode(filters)
+				let queryItemString = String(decoding: filtersEncoded, as: UTF8.self)
+				let queryItem = URLQueryItem(name: "filters", value: queryItemString)
+				queryItems.append(queryItem)
 			}
-			let queryItem = URLQueryItem(name: "filters", value: queryItemString)
-			queryItems.append(queryItem)
-		}
 
-		return queryItems
+			return queryItems
+		}
 	}
 }

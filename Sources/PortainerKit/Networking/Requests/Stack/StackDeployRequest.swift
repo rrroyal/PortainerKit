@@ -19,22 +19,24 @@ struct StackDeployRequest<Settings: StackDeploymentSettings> {
 // MARK: - StackDeployRequest+NetworkRequest
 
 extension StackDeployRequest: NetworkRequest {
-	typealias DecodedResponse = Stack
+	typealias ResponseBody = Stack
 
 	var method: HTTPMethod { .post }
 	var path: String { "/api/stacks/create/\(settings.deploymentType.rawValue)/\(settings.deploymentMethod.rawValue)" }
 
-	func makeQueryItems() throws -> [URLQueryItem]? {
+	var queryItems: [URLQueryItem]? {
 		[
 			.init(name: "endpointId", value: endpointID.description)
 		]
 	}
 }
 
-// MARK: - StackDeployRequest+JSONNetworkRequest
+// MARK: - StackDeployRequest+NetworkRequestWithBody
 
-extension StackDeployRequest: JSONNetworkRequest {
-	typealias JSONBody = Settings
+extension StackDeployRequest: NetworkRequestWithBody {
+	typealias RequestBody = Settings
 
-	var jsonBody: JSONBody? { settings }
+	var requestBody: RequestBody {
+		settings
+	}
 }

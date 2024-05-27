@@ -19,7 +19,7 @@ struct ContainerDetailsRequest {
 // MARK: - ContainerDetailsRequest+NetworkRequest
 
 extension ContainerDetailsRequest: NetworkRequest {
-	typealias DecodedResponse = ContainerDetails
+	typealias ResponseBody = ContainerDetails
 
 	var method: HTTPMethod { .get }
 	var path: String { "/api/endpoints/\(endpointID)/docker/containers/\(containerID)/json" }

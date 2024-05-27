@@ -51,7 +51,7 @@ public class PortainerClient: @unchecked Sendable {
 // MARK: - PortainerClient+Internal
 
 internal extension PortainerClient {
-	func send<R: NetworkRequest>(_ networkRequest: R) async throws -> R.DecodedResponse {
+	func send<R: NetworkRequest>(_ networkRequest: R) async throws -> R.ResponseBody {
 		guard let serverURL, let token else { throw Error.notSetup }
 
 		var urlRequest = try networkRequest.urlRequest(baseURL: serverURL)

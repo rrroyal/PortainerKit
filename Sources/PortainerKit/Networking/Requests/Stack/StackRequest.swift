@@ -1,5 +1,5 @@
 //
-//  StackDetailsRequest.swift
+//  StackRequest.swift
 //  PortainerKit
 //
 //  Created by royal on 04/04/2024.
@@ -9,16 +9,16 @@
 import Foundation
 import NetworkKit
 
-// MARK: - StackDetailsRequest
+// MARK: - StackRequest
 
-struct StackDetailsRequest {
+struct StackRequest {
 	var stackID: Stack.ID
 }
 
-// MARK: - StackDetailsRequest+NetworkRequest
+// MARK: - StackRequest+NetworkRequest
 
-extension StackDetailsRequest: NetworkRequest {
-	typealias DecodedResponse = Stack
+extension StackRequest: NetworkRequest {
+	typealias ResponseBody = Stack
 
 	var method: HTTPMethod { .get }
 	var path: String { "/api/stacks/\(stackID)" }

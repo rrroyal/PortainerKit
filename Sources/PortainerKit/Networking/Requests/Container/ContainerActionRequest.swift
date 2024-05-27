@@ -21,12 +21,12 @@ struct ContainerActionRequest {
 // MARK: - ContainerActionRequest+NetworkRequest
 
 extension ContainerActionRequest: NetworkRequest {
-	typealias DecodedResponse = Never?
+	typealias ResponseBody = Never?
 
 	var method: HTTPMethod { .post }
 	var path: String { "/api/endpoints/\(endpointID)/docker/containers/\(containerID)/\(action.rawValue)" }
 
-	func makeQueryItems() throws -> [URLQueryItem]? {
+	var queryItems: [URLQueryItem]? {
 		var queryItems: [URLQueryItem] = []
 
 		if let signal {
@@ -36,15 +36,15 @@ extension ContainerActionRequest: NetworkRequest {
 		return queryItems
 	}
 
-	func handleResponse(_ response: URLResponse, data: Data) throws -> DecodedResponse {
+	func handleResponse(_ response: URLResponse, data: Data) throws -> ResponseBody {
 		guard let response = response as? HTTPURLResponse else {
 			throw PortainerClient.Error.invalidResponse
 		}
 
 		if (200..<400) ~= response.statusCode {
-			// Container already has the specified state
 			return nil
 		} else {
+			let _: Never? = try PortainerClient.handleResponse(response, data: data)
 			throw PortainerClient.Error.responseCodeUnacceptable(response.statusCode)
 		}
 	}

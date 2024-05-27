@@ -18,20 +18,6 @@ struct StackFileRequest {
 // MARK: - StackFileRequest+NetworkRequest
 
 extension StackFileRequest: NetworkRequest {
-	typealias DecodedResponse = String
-
-	var method: HTTPMethod { .get }
-	var path: String { "/api/stacks/\(stackID)/file" }
-
-	func handleResponse(_ response: URLResponse, data: Data) throws -> DecodedResponse {
-		let decoded: ResponseBody = try PortainerClient.handleResponse(response, data: data)
-		return decoded.stackFileContent
-	}
-}
-
-// MARK: - StackFileRequest+ResponseBody
-
-extension StackFileRequest {
 	struct ResponseBody: Decodable {
 		enum CodingKeys: String, CodingKey {
 			case stackFileContent = "StackFileContent"
@@ -39,4 +25,7 @@ extension StackFileRequest {
 
 		var stackFileContent: String
 	}
+
+	var method: HTTPMethod { .get }
+	var path: String { "/api/stacks/\(stackID)/file" }
 }

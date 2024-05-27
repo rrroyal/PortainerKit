@@ -20,12 +20,14 @@ struct StackSetStateRequest {
 // MARK: - StackSetStateRequest+NetworkRequest
 
 extension StackSetStateRequest: NetworkRequest {
-	typealias DecodedResponse = Stack
+	typealias ResponseBody = Stack
 
 	var method: HTTPMethod { .post }
 	var path: String { "/api/stacks/\(stackID)/\(started ? "start" : "stop")" }
 
-	func makeQueryItems() throws -> [URLQueryItem]? {
-		[.init(name: "endpointId", value: "\(endpointID)")]
+	var queryItems: [URLQueryItem]? {
+		[
+			.init(name: "endpointId", value: "\(endpointID)")
+		]
 	}
 }

@@ -12,7 +12,7 @@ import NetworkKit
 // MARK: - NetworkRequest+Default
 
 extension NetworkRequest {
-	func handleResponse(_ response: URLResponse, data: Data) throws -> DecodedResponse {
+	func handleResponse(_ response: URLResponse, data: Data) throws -> ResponseBody {
 		try PortainerClient.handleResponse(response, data: data)
 	}
 }
@@ -23,17 +23,15 @@ extension NetworkRequest {
 	func urlRequest(baseURL: URL) throws -> URLRequest {
 		var url = baseURL.appending(path: self.path)
 
-		if let queryItems = try self.makeQueryItems(), !queryItems.isEmpty {
+		if let queryItems = try self.queryItems, !queryItems.isEmpty {
 			url.append(queryItems: queryItems)
 		}
 
 		var request = URLRequest(url: url)
 		request.httpMethod = self.method.rawValue
 
-		if let body = try self.makeBody() {
-			request.httpBody = body
-		} else if let self = self as? any JSONNetworkRequest, let body = self.jsonBody {
-			request.httpBody = try JSONEncoder.portainer.encode(body)
+		if let self = self as? any NetworkRequestWithBody {
+			request.httpBody = try JSONEncoder.portainer.encode(try self.requestBody)
 			request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 		}
 

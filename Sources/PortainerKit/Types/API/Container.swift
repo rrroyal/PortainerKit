@@ -22,7 +22,6 @@ public struct Container: Identifiable, Codable, Sendable {
 		case labels = "Labels"
 		case state = "State"
 		case status = "Status"
-		case networkSettings = "NetworkSettings"
 		case mounts = "Mounts"
 	}
 
@@ -36,7 +35,6 @@ public struct Container: Identifiable, Codable, Sendable {
 	public let labels: [String: String]?
 	public var state: Container.State?
 	public let status: String?
-	public let networkSettings: NetworkSettings?
 	public let mounts: [Mount]?
 
 	public init(
@@ -50,7 +48,6 @@ public struct Container: Identifiable, Codable, Sendable {
 		labels: [String: String]? = nil,
 		state: Container.State? = nil,
 		status: String? = nil,
-		networkSettings: NetworkSettings? = nil,
 		mounts: [Mount]? = nil
 	) {
 		self.id = id
@@ -63,25 +60,8 @@ public struct Container: Identifiable, Codable, Sendable {
 		self.labels = labels
 		self.state = state
 		self.status = status
-		self.networkSettings = networkSettings
 		self.mounts = mounts
 	}
-
-//	required public init(from decoder: Decoder) throws {
-//		let container = try decoder.container(keyedBy: CodingKeys.self)
-//		self.id = try container.decode(String.self, forKey: .id)
-//		self.names = try container.decodeIfPresent([String].self, forKey: .names)
-//		self.image = try container.decodeIfPresent(String.self, forKey: .image)
-//		self.imageID = try container.decodeIfPresent(String.self, forKey: .imageID)
-//		self.command = try container.decodeIfPresent(String.self, forKey: .command)
-//		self.created = try container.decodeIfPresent(Date.self, forKey: .created)
-//		self.ports = try container.decodeIfPresent([Port].self, forKey: .ports)
-//		self.labels = try container.decodeIfPresent([String : String].self, forKey: .labels)
-//		self.state = try container.decodeIfPresent(Container.State.self, forKey: .state)
-//		self.status = try container.decodeIfPresent(String.self, forKey: .status)
-//		self.networkSettings = try container.decodeIfPresent(Container.NetworkSettings.self, forKey: .networkSettings)
-//		self.mounts = try container.decodeIfPresent([Mount].self, forKey: .mounts)
-//	}
 }
 
 // MARK: - Container+State
@@ -95,18 +75,6 @@ public extension Container {
 		case removing
 		case exited
 		case dead
-	}
-}
-
-// MARK: - Container+NetworkSettings
-
-public extension Container {
-	struct NetworkSettings: Equatable, Codable, Sendable {
-		enum CodingKeys: String, CodingKey {
-			case network = "Networks"
-		}
-
-		public let network: Network?
 	}
 }
 
@@ -124,8 +92,7 @@ extension Container: Equatable {
 		lhs.command == rhs.command &&
 		lhs.labels == rhs.labels &&
 		lhs.ports == rhs.ports &&
-		lhs.mounts == rhs.mounts &&
-		lhs.networkSettings == rhs.networkSettings
+		lhs.mounts == rhs.mounts
 	}
 }
 

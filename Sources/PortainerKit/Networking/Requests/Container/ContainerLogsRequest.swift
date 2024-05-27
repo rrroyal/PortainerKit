@@ -43,12 +43,12 @@ struct ContainerLogsRequest {
 // MARK: - ContainerLogsRequest+NetworkRequest
 
 extension ContainerLogsRequest: NetworkRequest {
-	typealias DecodedResponse = String
+	typealias ResponseBody = String
 
 	var method: HTTPMethod { .get }
 	var path: String { "/api/endpoints/\(endpointID)/docker/containers/\(containerID)/logs" }
 
-	func makeQueryItems() throws -> [URLQueryItem]? {
+	var queryItems: [URLQueryItem]? {
 		var queryItems: [URLQueryItem] = [
 			.init(name: "stderr", value: (stderr ?? false) ? "1" : "0"),
 			.init(name: "stdout", value: (stdout ?? false) ? "1" : "0")
@@ -70,7 +70,7 @@ extension ContainerLogsRequest: NetworkRequest {
 		return queryItems
 	}
 
-	func handleResponse(_ response: URLResponse, data: Data) throws -> DecodedResponse {
+	func handleResponse(_ response: URLResponse, data: Data) throws -> ResponseBody {
 		var nsString: NSString?
 		let encodingRawValue = NSString.stringEncoding(
 			for: data,
@@ -83,10 +83,7 @@ extension ContainerLogsRequest: NetworkRequest {
 			return String(nsString)
 		}
 
-		if let string = String(data: data, encoding: .utf8) ?? String(data: data, encoding: .ascii) {
-			return string
-		}
-
-		throw PortainerClient.Error.decodingFailed
+		let string = String(decoding: data, as: UTF8.self)
+		return string
 	}
 }

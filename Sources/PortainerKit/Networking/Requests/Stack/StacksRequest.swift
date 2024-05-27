@@ -19,22 +19,21 @@ struct StacksRequest {
 // MARK: - StacksRequest+NetworkRequest
 
 extension StacksRequest: NetworkRequest {
-	typealias DecodedResponse = [Stack]
+	typealias ResponseBody = [Stack]
 
 	var method: HTTPMethod { .get }
 	var path: String { "/api/stacks" }
 
-	func makeQueryItems() throws -> [URLQueryItem]? {
-		let filters = FetchFilters(
-			endpointID: endpointID,
-			includeOrphanedStacks: includeOrphanedStacks
-		)
+	var queryItems: [URLQueryItem]? {
+		get throws {
+			let filters = FetchFilters(
+				endpointID: endpointID,
+				includeOrphanedStacks: includeOrphanedStacks
+			)
 
-		let filtersEncoded = try JSONEncoder.portainer.encode(filters)
-		guard let filtersQuery = String(data: filtersEncoded, encoding: .utf8) else {
-			throw PortainerClient.Error.encodingFailed
+			let filtersEncoded = try JSONEncoder.portainer.encode(filters)
+			let filtersQuery = String(decoding: filtersEncoded, as: UTF8.self)
+			return [.init(name: "filters", value: filtersQuery)]
 		}
-
-		return [.init(name: "filters", value: filtersQuery)]
 	}
 }

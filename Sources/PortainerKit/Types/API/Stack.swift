@@ -43,7 +43,7 @@ public struct Stack: Identifiable, Equatable, Codable, Sendable {
 		name: String,
 		type: StackType,
 		endpointID: Int,
-		env: [EnvironmentEntry]? = nil,
+		env: [EnvironmentEntry]?,
 		status: Status? = nil
 	) {
 		self.id = id

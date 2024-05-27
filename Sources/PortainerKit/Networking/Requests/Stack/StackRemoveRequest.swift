@@ -20,12 +20,12 @@ struct StackRemoveRequest {
 // MARK: - StackRemoveRequest+NetworkRequest
 
 extension StackRemoveRequest: NetworkRequest {
-	typealias DecodedResponse = Never?
+	typealias ResponseBody = Never?
 
 	var method: HTTPMethod { .delete }
 	var path: String { "/api/stacks/\(stackID)" }
 
-	func makeQueryItems() throws -> [URLQueryItem]? {
+	var queryItems: [URLQueryItem]? {
 		var queryItems: [URLQueryItem] = [
 			.init(name: "endpointId", value: endpointID.description)
 		]
@@ -37,7 +37,7 @@ extension StackRemoveRequest: NetworkRequest {
 		return queryItems
 	}
 
-	func handleResponse(_ response: URLResponse, data: Data) throws -> DecodedResponse {
+	func handleResponse(_ response: URLResponse, data: Data) throws -> ResponseBody {
 		guard let response = response as? HTTPURLResponse else {
 			throw PortainerClient.Error.invalidResponse
 		}
@@ -45,6 +45,7 @@ extension StackRemoveRequest: NetworkRequest {
 		if (200..<400) ~= response.statusCode {
 			return nil
 		} else {
+			let _: Never? = try PortainerClient.handleResponse(response, data: data)
 			throw PortainerClient.Error.responseCodeUnacceptable(response.statusCode)
 		}
 	}

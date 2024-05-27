@@ -113,4 +113,18 @@ services:
 		let response = try await portainerClient.fetchStacks()
 		print("[*] Stacks (\(response.count)): \(response.map { "\($0.name) (\($0.id))" })")
 	}
+
+	func testStackUpdate() async throws {
+		do {
+			let stack = try await portainerClient.updateStack(
+				stackID: stackID,
+				endpointID: endpointID,
+				settings: .init(env: [], prune: true, pullImage: true, stackFileContent: "")
+			)
+			print("[*] Updated stack with ID: \"\(stackID)\": \(stack)")
+		} catch {
+			print("[!] Failed to update stack with ID: \"\(stackID)\": \(error)")
+			throw error
+		}
+	}
 }

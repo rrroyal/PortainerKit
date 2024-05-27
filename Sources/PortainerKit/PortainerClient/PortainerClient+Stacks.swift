@@ -67,6 +67,19 @@ public extension PortainerClient {
 		return response
 	}
 
+	/// Updates a stack with specified `stackID` and  `endpointID` with provided `settings`.
+	/// - Parameters:
+	///   - stackID: Stack identifier
+	///   - endpointID: Endpoint identifier
+	///   - settings: Update settings
+	/// - Returns: Updated `Stack`
+	@Sendable
+	func updateStack(stackID: Stack.ID, endpointID: Endpoint.ID, settings: StackUpdateSettings) async throws -> Stack {
+		let request = StackUpdateRequest(stackID: stackID, endpointID: endpointID, settings: settings)
+		let response = try await send(request)
+		return response
+	}
+
 	/// Removes a stack with specified `stackID`.
 	/// - Parameters:
 	///   - stackID: Stack ID to remove

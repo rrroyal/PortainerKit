@@ -62,7 +62,8 @@ final class OfflineTests: XCTestCase {
 			StackFileRequest(stackID: stackID),
 			StackRemoveRequest(stackID: stackID, endpointID: endpointID),
 			StackSetStateRequest(stackID: stackID, started: true, endpointID: endpointID),
-			StacksRequest()
+			StacksRequest(),
+			StackUpdateRequest(stackID: stackID, endpointID: endpointID, settings: .init(env: [], prune: true, pullImage: true, stackFileContent: ""))
 		]
 
 		let descriptions = try requests.map {

@@ -88,7 +88,7 @@ public extension Stack {
 	}
 }
 
-extension [Stack.EnvironmentEntry]: ExpressibleByDictionaryLiteral {
+extension [Stack.EnvironmentEntry]: @retroactive ExpressibleByDictionaryLiteral {
 	public init(dictionaryLiteral elements: (String, String)...) {
 		self = elements.map { .init(name: $0, value: $1) }
 	}

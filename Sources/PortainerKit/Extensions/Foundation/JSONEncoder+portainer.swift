@@ -9,7 +9,7 @@
 import Foundation
 
 extension JSONEncoder {
-	static var portainer: JSONEncoder = {
+	static let portainer: JSONEncoder = {
 		let encoder = JSONEncoder()
 		return encoder
 	}()

@@ -67,7 +67,7 @@ public struct Container: Identifiable, Codable, Sendable {
 // MARK: - Container+State
 
 public extension Container {
-	enum State: String, Codable, Sendable, Equatable {
+	enum State: String, Codable, Equatable, Hashable, Sendable {
 		case created
 		case running
 		case paused

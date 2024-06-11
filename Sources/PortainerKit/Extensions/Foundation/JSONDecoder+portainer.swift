@@ -9,7 +9,7 @@
 import Foundation
 
 extension JSONDecoder {
-	static var portainer: JSONDecoder = {
+	static let portainer: JSONDecoder = {
 		let decoder = JSONDecoder()
 		decoder.dateDecodingStrategy = .custom { decoder -> Date in
 			let dateFormatter = ISO8601DateFormatter()

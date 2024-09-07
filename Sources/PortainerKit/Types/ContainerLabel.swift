@@ -6,6 +6,6 @@
 //  Copyright © 2024 shameful. All rights reserved.
 //
 
-public enum ContainerLabel {
+public enum ContainerLabel: Sendable {
 	public static let stack = "com.docker.compose.project"
 }

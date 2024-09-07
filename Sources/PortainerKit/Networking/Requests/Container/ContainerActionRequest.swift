@@ -38,7 +38,7 @@ extension ContainerActionRequest: NetworkRequest {
 
 	func handleResponse(_ response: URLResponse, data: Data) throws -> ResponseBody {
 		guard let response = response as? HTTPURLResponse else {
-			throw PortainerClient.Error.invalidResponse
+			throw URLError(.cannotParseResponse)
 		}
 
 		if (200..<400) ~= response.statusCode {

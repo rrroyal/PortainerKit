@@ -9,7 +9,7 @@
 import Foundation
 
 public extension PortainerClient {
-	struct APIError: Codable {
+	struct APIError: Codable, Sendable {
 		public let message: String
 		public let details: String?
 	}

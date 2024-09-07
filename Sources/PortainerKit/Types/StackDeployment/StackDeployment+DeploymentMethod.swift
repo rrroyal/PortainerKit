@@ -9,7 +9,7 @@
 import Foundation
 
 public extension StackDeployment {
-	enum DeploymentMethod: String, Codable {
+	enum DeploymentMethod: String, Codable, Sendable {
 		//	case file
 		case string
 		case repository

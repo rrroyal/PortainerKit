@@ -12,16 +12,6 @@ public extension PortainerClient {
 	enum Error: Swift.Error {
 		case notSetup
 
-		case other(_ reason: String)
-		case unknownError
-
 		case responseCodeUnacceptable(_ code: Int)
-
-		case encodingFailed
-		case decodingFailed
-
-		case invalidURL
-		case invalidRequest
-		case invalidResponse
 	}
 }

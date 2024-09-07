@@ -7,7 +7,7 @@
 //
 
 public extension StackDeployment.DeploymentSettings {
-	struct StandaloneString: StackDeploymentSettings {
+	struct StandaloneString: StackDeploymentSettings, Sendable {
 		public let deploymentType: StackDeployment.DeploymentType = .standalone
 		public let deploymentMethod: StackDeployment.DeploymentMethod = .string
 

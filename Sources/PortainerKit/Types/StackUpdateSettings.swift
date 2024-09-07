@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct StackUpdateSettings: Encodable {
+public struct StackUpdateSettings: Encodable, Sendable {
 	public var env: [Stack.EnvironmentEntry]
 	public var prune: Bool
 	public var pullImage: Bool

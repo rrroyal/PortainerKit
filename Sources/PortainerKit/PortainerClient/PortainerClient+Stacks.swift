@@ -15,7 +15,6 @@ public extension PortainerClient {
 	///   - endpointID: Fetch stacks for this endpoint ID
 	///   - includeOrphaned: Include orphaned stacks?
 	/// - Returns: `[Stack]` list
-	@Sendable
 	func fetchStacks(endpointID: Endpoint.ID? = nil, includeOrphaned: Bool = true) async throws -> [Stack] {
 		let request = StacksRequest(endpointID: endpointID, includeOrphanedStacks: includeOrphaned)
 		let response = try await send(request)
@@ -25,7 +24,6 @@ public extension PortainerClient {
 	/// Fetches the stack with specified ID.
 	/// - Parameter stackID: Stack ID
 	/// - Returns: `Stack`
-	@Sendable
 	func fetchStack(id stackID: Stack.ID) async throws -> Stack {
 		let request = StackRequest(stackID: stackID)
 		let response = try await send(request)
@@ -38,7 +36,6 @@ public extension PortainerClient {
 	///   - started: Should stack be started?
 	///   - endpointID: Endpoint identifier
 	/// - Returns: Affected `Stack`, or nil if not modified
-	@Sendable
 	func setStackState(stackID: Stack.ID, started: Bool, endpointID: Endpoint.ID) async throws -> Stack? {
 		let request = StackSetStateRequest(stackID: stackID, started: started, endpointID: endpointID)
 		let response = try await send(request)
@@ -48,7 +45,6 @@ public extension PortainerClient {
 	/// Fetches the Docker Compose file contents for specified stack ID.
 	/// - Parameter stackID: Stack ID to fetch the Docker Compose file contents for
 	/// - Returns: Docker Compose file contents
-	@Sendable
 	func fetchStackFile(stackID: Stack.ID) async throws -> String {
 		let request = StackFileRequest(stackID: stackID)
 		let response = try await send(request)
@@ -60,7 +56,6 @@ public extension PortainerClient {
 	///   - endpointID: Endpoint identifier
 	///   - settings: Deployment settings
 	/// - Returns: Newly created `Stack`
-	@Sendable
 	func deployStack(endpointID: Endpoint.ID, settings: some StackDeploymentSettings) async throws -> Stack {
 		let request = StackDeployRequest(endpointID: endpointID, settings: settings)
 		let response = try await send(request)
@@ -73,7 +68,6 @@ public extension PortainerClient {
 	///   - endpointID: Endpoint identifier
 	///   - settings: Update settings
 	/// - Returns: Updated `Stack`
-	@Sendable
 	func updateStack(stackID: Stack.ID, endpointID: Endpoint.ID, settings: StackUpdateSettings) async throws -> Stack {
 		let request = StackUpdateRequest(stackID: stackID, endpointID: endpointID, settings: settings)
 		let response = try await send(request)
@@ -85,7 +79,6 @@ public extension PortainerClient {
 	///   - stackID: Stack ID to remove
 	///   - endpointID: Endpoint identifier
 	///   - external: Is this stack external?
-	@Sendable
 	func removeStack(stackID: Stack.ID, endpointID: Endpoint.ID, external: Bool = false) async throws {
 		let request = StackRemoveRequest(stackID: stackID, endpointID: endpointID, external: external)
 		_ = try await send(request)

@@ -1,5 +1,5 @@
 {
-  "originHash" : "5b1b30623dc56d44ea213fb6a92a61ea76ba56187c0176db4cdad3da68c67086",
+  "originHash" : "358799c859861ee43c5a90ae83bfa49c59b7f39143f1f3e0889eac62e45afa9b",
   "pins" : [
     {
       "identity" : "networkkit",
@@ -7,7 +7,7 @@
       "location" : "https://github.com/rrroyal/NetworkKit",
       "state" : {
         "branch" : "main",
-        "revision" : "82a5a1e450c64898982c378b517bb5ecae2f3d75"
+        "revision" : "9a7cbf968f3fcc21445f31a63dac22020d17a74b"
       }
     }
   ],

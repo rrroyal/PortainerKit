@@ -12,7 +12,7 @@ import OSLog
 
 // MARK: - PortainerClient
 
-public class PortainerClient: @unchecked Sendable {
+public class PortainerClient {
 
 	// MARK: Static Properties
 

@@ -7,5 +7,5 @@
 //
 
 public extension StackDeployment {
-	enum DeploymentSettings { }
+	enum DeploymentSettings: Sendable { }
 }

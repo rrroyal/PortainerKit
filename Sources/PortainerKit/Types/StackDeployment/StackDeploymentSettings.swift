@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol StackDeploymentSettings: Encodable {
+public protocol StackDeploymentSettings: Encodable, Sendable {
 	var deploymentType: StackDeployment.DeploymentType { get }
 	var deploymentMethod: StackDeployment.DeploymentMethod { get }
 }

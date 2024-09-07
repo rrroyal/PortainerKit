@@ -77,7 +77,7 @@ public extension Stack {
 // MARK: - Stack+EnvironmentEntry
 
 public extension Stack {
-	struct EnvironmentEntry: Equatable, Codable, Sendable, Hashable {
+	struct EnvironmentEntry: Equatable, Codable, Hashable, Sendable {
 		public let name: String
 		public let value: String
 

@@ -13,7 +13,6 @@ public extension PortainerClient {
 	/// - Parameter endpointID: Endpoint ID
 	/// - Parameter filters: Query filters
 	/// - Returns: `[Container]`
-	@Sendable
 	func fetchContainers(endpointID: Endpoint.ID, filters: FetchFilters? = nil) async throws -> [Container] {
 		let request = ContainersRequest(endpointID: endpointID, filters: filters)
 		let response = try await send(request)
@@ -25,7 +24,7 @@ public extension PortainerClient {
 	///   - endpointID: Endpoint ID
 	///   - stackName: Stack name
 	/// - Returns: `[Container]`
-	@Sendable @inlinable
+	@inlinable
 	func fetchContainers(endpointID: Endpoint.ID, stackName: String) async throws -> [Container] {
 		// This will probably break with Swarm projects, but it will be a problem for future me :)
 		let filters = FetchFilters(
@@ -39,7 +38,6 @@ public extension PortainerClient {
 	///   - containerID: Container ID
 	///   - endpointID: Endpoint ID
 	/// - Returns: `ContainerDetails`
-	@Sendable
 	func fetchContainerDetails(for containerID: Container.ID, endpointID: Endpoint.ID) async throws -> ContainerDetails {
 		let request = ContainerDetailsRequest(containerID: containerID, endpointID: endpointID)
 		let response = try await send(request)
@@ -51,7 +49,6 @@ public extension PortainerClient {
 	///   - action: Executed action
 	///   - containerID: Container ID
 	///   - endpointID: Endpoint ID
-	@Sendable
 	func executeContainerAction(_ action: ContainerAction, containerID: Container.ID, endpointID: Endpoint.ID) async throws {
 		let request = ContainerActionRequest(containerID: containerID, endpointID: endpointID, action: action)
 		_ = try await send(request)
@@ -66,7 +63,6 @@ public extension PortainerClient {
 	///   - amount: Number of lines, counting from the end
 	///   - timestamps: Display timestamps?
 	/// - Returns: Logs for specified container
-	@Sendable
 	func fetchContainerLogs(
 		for containerID: Container.ID,
 		endpointID: Endpoint.ID,
@@ -95,7 +91,6 @@ public extension PortainerClient {
 	///   - endpointID: ID of the endpoint with specified `containerID`
 	///   - removeVolumes: Remove the volumes associated with the container
 	///   - force: If the container is running, kill it before removing it
-	@Sendable
 	func removeContainer(
 		containerID: Container.ID,
 		endpointID: Endpoint.ID,
@@ -114,8 +109,8 @@ public extension PortainerClient {
 	///   - containerID: Container ID
 	///   - endpointID: Endpoint ID
 	/// - Returns: `WebSocketPassthroughSubject`
-	@Sendable
-	func containerWebsocket(for containerID: Container.ID, endpointID: Endpoint.ID) throws -> WebSocketPassthroughSubject {
+	/*
+	 func containerWebsocket(for containerID: Container.ID, endpointID: Endpoint.ID) throws -> WebSocketPassthroughSubject {
 		guard let serverURL else { throw Error.notSetup }
 
 		guard let url: URL = {
@@ -127,7 +122,7 @@ public extension PortainerClient {
 				.init(name: "id", value: containerID)
 			]
 			return components.url
-		}() else { throw Error.invalidURL }
+		}() else { throw URLError(.badURL) }
 
 		let task = urlSession.webSocketTask(with: url)
 		let passthroughSubject = WebSocketPassthroughSubject()
@@ -152,4 +147,5 @@ public extension PortainerClient {
 
 		return passthroughSubject
 	}
+	 */
 }

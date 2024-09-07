@@ -11,8 +11,8 @@ import Foundation
 
 public typealias WebSocketPassthroughSubject = PassthroughSubject<WebSocketMessage, Error>
 
-public struct WebSocketMessage {
-	public enum MessageSource {
+public struct WebSocketMessage: Sendable {
+	public enum MessageSource: Sendable {
 		case server, client
 	}
 

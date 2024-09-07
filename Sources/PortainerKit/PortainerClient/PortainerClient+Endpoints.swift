@@ -12,7 +12,6 @@ public extension PortainerClient {
 	/// Otherwise it will only return authorized environments(endpoints).
 	///
 	/// - Returns: `[Endpoint]`
-	@Sendable
 	func fetchEndpoints() async throws -> [Endpoint] {
 		let request = EndpointsRequest()
 		let response = try await send(request)

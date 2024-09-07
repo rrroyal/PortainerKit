@@ -9,7 +9,7 @@
 import Foundation
 
 public extension StackDeployment {
-	enum DeploymentType: String, Codable {
+	enum DeploymentType: String, Codable, Sendable {
 		case kubernetes
 		case standalone
 		case swarm

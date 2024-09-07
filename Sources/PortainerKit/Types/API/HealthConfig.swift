@@ -6,7 +6,7 @@
 //  Copyright © 2024 shameful. All rights reserved.
 //
 
-public struct HealthConfig: Codable, Sendable, Equatable {
+public struct HealthConfig: Codable, Equatable, Sendable {
 	enum CodingKeys: String, CodingKey {
 		case test = "Test"
 		case interval = "Interval"

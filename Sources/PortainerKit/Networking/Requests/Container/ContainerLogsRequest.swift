@@ -83,7 +83,9 @@ extension ContainerLogsRequest: NetworkRequest {
 			return String(nsString)
 		}
 
-		let string = String(decoding: data, as: UTF8.self)
+		guard let string = String(data: data, encoding: .utf8) else {
+			throw PortainerClient.ClientError.encodingFailed
+		}
 		return string
 	}
 }

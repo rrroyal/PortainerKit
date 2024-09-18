@@ -46,7 +46,7 @@ extension StackRemoveRequest: NetworkRequest {
 			return nil
 		} else {
 			let _: Never? = try PortainerClient.handleResponse(response, data: data)
-			throw PortainerClient.Error.responseCodeUnacceptable(response.statusCode)
+			throw PortainerClient.ClientError.responseCodeUnacceptable(response.statusCode)
 		}
 	}
 }

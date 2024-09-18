@@ -32,7 +32,9 @@ extension StacksRequest: NetworkRequest {
 			)
 
 			let filtersEncoded = try JSONEncoder.portainer.encode(filters)
-			let filtersQuery = String(decoding: filtersEncoded, as: UTF8.self)
+			guard let filtersQuery = String(data: filtersEncoded, encoding: .utf8) else {
+				throw PortainerClient.ClientError.encodingFailed
+			}
 			return [.init(name: "filters", value: filtersQuery)]
 		}
 	}

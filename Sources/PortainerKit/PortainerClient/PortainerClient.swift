@@ -52,7 +52,7 @@ public class PortainerClient {
 
 internal extension PortainerClient {
 	func send<R: NetworkRequest>(_ networkRequest: R) async throws -> R.ResponseBody {
-		guard let serverURL, let token else { throw Error.notSetup }
+		guard let serverURL, let token else { throw ClientError.notSetup }
 
 		var urlRequest = try networkRequest.urlRequest(baseURL: serverURL)
 		urlRequest.addValue(token, forHTTPHeaderField: "X-API-Key")
@@ -82,7 +82,7 @@ internal extension PortainerClient {
 			if let urlResponse = response as? HTTPURLResponse {
 				// ...throw response code
 				if !(200..<400 ~= urlResponse.statusCode) {
-					throw Error.responseCodeUnacceptable(urlResponse.statusCode)
+					throw ClientError.responseCodeUnacceptable(urlResponse.statusCode)
 				}
 			} else {
 				// ...or call assertionFailure, as we can't get the response code

@@ -34,7 +34,9 @@ extension ContainersRequest: NetworkRequest {
 
 			if let filters {
 				let filtersEncoded = try JSONEncoder.portainer.encode(filters)
-				let queryItemString = String(decoding: filtersEncoded, as: UTF8.self)
+				guard let queryItemString = String(data: filtersEncoded, encoding: .utf8) else {
+					throw PortainerClient.ClientError.encodingFailed
+				}
 				let queryItem = URLQueryItem(name: "filters", value: queryItemString)
 				queryItems.append(queryItem)
 			}

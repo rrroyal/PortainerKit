@@ -1,5 +1,5 @@
 //
-//  PortainerClient+PortainerError.swift
+//  PortainerClient+ClientError.swift
 //  PortainerKit
 //
 //  Created by royal on 01/10/2022.
@@ -9,9 +9,11 @@
 import Foundation
 
 public extension PortainerClient {
-	enum Error: Swift.Error {
+	enum ClientError: Error {
 		case notSetup
 
 		case responseCodeUnacceptable(_ code: Int)
+
+		case encodingFailed
 	}
 }

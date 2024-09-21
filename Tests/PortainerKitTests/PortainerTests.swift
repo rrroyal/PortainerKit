@@ -59,8 +59,8 @@ final class PortainerTests: XCTestCase {
 		}
 	}
 
-	func testStackDetails() async throws {
-		let response = try await portainerClient.fetchStackDetails(stackID: stackID)
+	func testStack() async throws {
+		let response = try await portainerClient.fetchStack(id: stackID)
 		print("[*] Stack: \"\(response.name)\" (\(response.id))")
 	}
 

@@ -20,11 +20,12 @@ struct ContainerActionRequest {
 
 // MARK: - ContainerActionRequest+NetworkRequest
 
-extension ContainerActionRequest: NetworkRequest {
+extension ContainerActionRequest: NetworkRequestWithBody {
 	typealias ResponseBody = Never?
 
 	var method: HTTPMethod { .post }
 	var path: String { "/api/endpoints/\(endpointID)/docker/containers/\(containerID)/\(action.rawValue)" }
+	var requestBody: String { "{}" }
 
 	var queryItems: [URLQueryItem]? {
 		var queryItems: [URLQueryItem] = []

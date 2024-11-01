@@ -19,7 +19,7 @@ public class PortainerClient {
 	private static let jsonDecoder = JSONDecoder.portainer
 	private static let jsonEncoder = JSONEncoder.portainer
 
-	internal static let bundleIdentifier = "xyz.shameful.PortainerKit"
+	public static let bundleIdentifier = "xyz.shameful.PortainerKit"
 
 	// MARK: Internal Properties
 
@@ -57,13 +57,23 @@ internal extension PortainerClient {
 		var urlRequest = try networkRequest.urlRequest(baseURL: serverURL)
 		urlRequest.addValue(token, forHTTPHeaderField: "X-API-Key")
 
+		#if DEBUG
+		logger.debug("📤 \(String(describing: networkRequest)) \(urlRequest)")
+		#endif
+
 		do {
 			let (data, response) = try await urlSession.data(for: urlRequest)
+
+			#if DEBUG
+			logger.debug("📥 \(response), \(data.isEmpty ? "<no data>" : String(data: data, encoding: .utf8) ?? data.base64EncodedString())")
+			#endif
 
 			let decoded = try networkRequest.handleResponse(response, data: data)
 			return decoded
 		} catch {
-//			logger.error("Network request failed: \(error, privacy: .public)")
+			#if DEBUG
+			logger.error("Network request failed: \(error, privacy: .public)")
+			#endif
 			throw error
 		}
 	}

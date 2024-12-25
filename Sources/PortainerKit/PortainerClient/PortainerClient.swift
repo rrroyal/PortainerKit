@@ -83,23 +83,27 @@ internal extension PortainerClient {
 			let decoded = try Self.jsonDecoder.decode(T.self, from: data)
 			return decoded
 		} catch {
-			// Decode error message first...
-			if let decoded = try? Self.jsonDecoder.decode(APIError.self, from: data) {
-				throw decoded
-			}
-
-			// ...if not, get the response status code...
-			if let urlResponse = response as? HTTPURLResponse {
-				// ...throw response code
-				if !(200..<400 ~= urlResponse.statusCode) {
-					throw ClientError.responseCodeUnacceptable(urlResponse.statusCode)
-				}
-			} else {
-				// ...or call assertionFailure, as we can't get the response code
-				assertionFailure("Response isn't `HTTPURLResponse`: \(String(describing: response))")
-			}
-
-			throw error
+			throw handleErrorResponse(response, data: data) ?? error
 		}
+	}
+
+	static func handleErrorResponse(_ response: URLResponse, data: Data) -> Error? {
+		// Decode error message first...
+		if let decoded = try? Self.jsonDecoder.decode(APIError.self, from: data) {
+			return decoded
+		}
+
+		// ...if not, get the response status code...
+		if let urlResponse = response as? HTTPURLResponse {
+			// ...throw response code
+			if !(200..<400 ~= urlResponse.statusCode) {
+				return ClientError.responseCodeUnacceptable(urlResponse.statusCode)
+			}
+		} else {
+			// ...or call assertionFailure, as we can't get the response code
+			assertionFailure("Response isn't `HTTPURLResponse`: \(String(describing: response))")
+		}
+
+		return nil
 	}
 }

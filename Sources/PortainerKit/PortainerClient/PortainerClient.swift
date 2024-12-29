@@ -44,7 +44,7 @@ public class PortainerClient {
 		self.token = token
 
 		let delegate = PortainerClient.URLSessionDelegate()
-		self.urlSession = .init(configuration: urlSessionConfiguration, delegate: delegate, delegateQueue: OperationQueue.main)
+		self.urlSession = .init(configuration: urlSessionConfiguration, delegate: delegate, delegateQueue: .current)
 	}
 }
 

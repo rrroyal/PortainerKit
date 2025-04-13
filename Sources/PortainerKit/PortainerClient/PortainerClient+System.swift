@@ -14,4 +14,12 @@ public extension PortainerClient {
 		let response = try await send(request)
 		return response
 	}
+
+	/// Check if portainer has an update available.
+	/// - Returns: `SystemVersion`
+	func fetchSystemVersion() async throws -> SystemVersion {
+		let request = SystemVersionRequest()
+		let response = try await send(request)
+		return response
+	}
 }

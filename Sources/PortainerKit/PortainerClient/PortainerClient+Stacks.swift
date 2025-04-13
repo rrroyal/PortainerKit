@@ -15,7 +15,7 @@ public extension PortainerClient {
 	///   - endpointID: Fetch stacks for this endpoint ID
 	///   - includeOrphaned: Include orphaned stacks?
 	/// - Returns: `[Stack]` list
-	func fetchStacks(endpointID: Endpoint.ID? = nil, includeOrphaned: Bool = true) async throws -> [Stack] {
+	func fetchStacks(endpointID: Endpoint.ID?, includeOrphaned: Bool) async throws -> [Stack] {
 		let request = StacksRequest(endpointID: endpointID, includeOrphanedStacks: includeOrphaned)
 		let response = try await send(request)
 		return response

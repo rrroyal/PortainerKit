@@ -144,9 +144,11 @@ public extension ContainerDetails {
 	struct HostConfig: Codable, Equatable, Sendable {
 		enum CodingKeys: String, CodingKey {
 			case portBindings = "PortBindings"
+			case devices = "Devices"
 		}
 
 		public let portBindings: [String: [PortBinding]]?
+		public let devices: [Device]?
 	}
 }
 

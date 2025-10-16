@@ -16,5 +16,3 @@ public struct Device: Codable, Equatable, Sendable {
     public let pathInContainer: String?
     public let cgroupPermissions: String?
 }
-
-

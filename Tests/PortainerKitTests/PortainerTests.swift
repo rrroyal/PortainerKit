@@ -1,7 +1,9 @@
+import Foundation
 @testable import PortainerKit
-import XCTest
+import Testing
 
-final class PortainerTests: XCTestCase {
+@Suite
+struct PortainerTests {
 	// swiftlint:disable:next force_unwrapping
 	let portainerClient = PortainerClient(serverURL: URL(string: "http://localhost:8080")!, token: "")
 	let endpointID: Endpoint.ID = 0
@@ -110,7 +112,7 @@ services:
 	}
 
 	func testStacks() async throws {
-		let response = try await portainerClient.fetchStacks()
+		let response = try await portainerClient.fetchStacks(endpointID: endpointID, includeOrphaned: true)
 		print("[*] Stacks (\(response.count)): \(response.map { "\($0.name) (\($0.id))" })")
 	}
 

@@ -1,0 +1,15 @@
+{
+  "originHash" : "358799c859861ee43c5a90ae83bfa49c59b7f39143f1f3e0889eac62e45afa9b",
+  "pins" : [
+    {
+      "identity" : "networkkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rrroyal/NetworkKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "6eb699afd36f86e2e45ea8602ea114617b3e8511"
+      }
+    }
+  ],
+  "version" : 3
+}

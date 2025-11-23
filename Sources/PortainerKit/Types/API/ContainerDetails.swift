@@ -126,14 +126,14 @@ public extension ContainerDetails {
 			case networks = "Networks"
 		}
 
-		public let bridge: String
-		public let gateway: String
+		public let bridge: String?
+		public let gateway: String?
 		public let address: String?
 		public let ipAddress: String?
-		public let ipPrefixLen: Int
-		public let macAddress: String
+		public let ipPrefixLen: Int?
+		public let macAddress: String?
 		public let portMapping: String?
-		public let ports: Port
+		public let ports: Port?
 		public let networks: [String: Network]?
 	}
 }

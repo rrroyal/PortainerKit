@@ -75,21 +75,17 @@ extension ContainerLogsRequest: NetworkRequest {
 			throw error
 		}
 
-		var nsString: NSString?
-		let encodingRawValue = NSString.stringEncoding(
-			for: data,
-			encodingOptions: nil,
-			convertedString: &nsString,
-			usedLossyConversion: nil
-		)
-
-		if let nsString, encodingRawValue > 0 {
-			return String(nsString)
+		let encodings: [String.Encoding] = [
+			.utf8,
+			.ascii,
+			.isoLatin1
+		]
+		for encoding in encodings {
+			if let string = String(data: data, encoding: encoding) {
+				return string
+			}
 		}
 
-		guard let string = String(data: data, encoding: .utf8) else {
-			throw PortainerClient.ClientError.encodingFailed
-		}
-		return string
+		throw PortainerClient.ClientError.decodingFailed
 	}
 }

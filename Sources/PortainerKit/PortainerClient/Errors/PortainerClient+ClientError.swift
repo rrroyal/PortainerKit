@@ -15,5 +15,6 @@ public extension PortainerClient {
 		case responseCodeUnacceptable(_ code: Int)
 
 		case encodingFailed
+		case decodingFailed
 	}
 }

@@ -85,6 +85,17 @@ public extension PortainerClient {
 		return result
 	}
 
+	/// Fetches resource usage statistics for a container.
+	/// - Parameters:
+	///   - containerID: Container ID
+	///   - endpointID: Endpoint ID
+	/// - Returns: `ContainerStats`
+	func fetchContainerStats(for containerID: Container.ID, endpointID: Endpoint.ID) async throws -> ContainerStats {
+		let request = ContainerStatsRequest(containerID: containerID, endpointID: endpointID)
+		let response = try await send(request)
+		return response
+	}
+
 	/// Remove a container.
 	/// - Parameters:
 	///   - containerID: Container ID to remove

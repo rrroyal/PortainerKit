@@ -85,7 +85,7 @@ public extension PortainerClient {
 		return result
 	}
 
-	/// Fetches resource usage statistics for a container.
+	/// Returns a snapshot of a container's resource usage statistics.
 	/// - Parameters:
 	///   - containerID: Container ID
 	///   - endpointID: Endpoint ID

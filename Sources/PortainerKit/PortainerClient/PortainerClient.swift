@@ -58,14 +58,18 @@ internal extension PortainerClient {
 		urlRequest.addValue(token, forHTTPHeaderField: "X-API-Key")
 
 		#if DEBUG
-		logger.debug("📤 \(String(describing: networkRequest)) \(urlRequest)")
+		if UserDefaults.standard.bool(forKey: "PKLogNetworkRequests") {
+			logger.debug("📤 \(String(describing: networkRequest)) \(urlRequest)")
+		}
 		#endif
 
 		do {
 			let (data, response) = try await urlSession.data(for: urlRequest)
 
 			#if DEBUG
-			logger.debug("📥 \(response), \(data.isEmpty ? "<no data>" : String(data: data, encoding: .utf8) ?? data.base64EncodedString())")
+			if UserDefaults.standard.bool(forKey: "PKLogNetworkResponses") {
+				logger.debug("📥 \(response), \(data.isEmpty ? "<no data>" : String(data: data, encoding: .utf8) ?? data.base64EncodedString())")
+			}
 			#endif
 
 			let decoded = try networkRequest.handleResponse(response, data: data)

@@ -14,7 +14,7 @@ public struct Port: Equatable, Hashable, Codable, Sendable {
 		case type = "Type"
 	}
 
-	public enum PortType: String, Hashable, Codable, Sendable {
+	public enum PortType: String, CaseIterable, Hashable, Codable, Sendable {
 		case tcp
 		case udp
 	}

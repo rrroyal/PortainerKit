@@ -8,4 +8,5 @@
 
 public enum ContainerLabel: Sendable {
 	public static let stack = "com.docker.compose.project"
+	public static let swarmStack = "com.docker.stack.namespace"
 }

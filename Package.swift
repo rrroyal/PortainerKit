@@ -28,7 +28,10 @@ let package = Package(
 		),
 		.testTarget(
 			name: "PortainerKitTests",
-			dependencies: ["PortainerKit"]
+			dependencies: ["PortainerKit"],
+			resources: [
+				.copy("Resources")
+			]
 		)
 	]
 )

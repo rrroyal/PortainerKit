@@ -23,7 +23,7 @@ public class PortainerClient {
 
 	// MARK: Internal Properties
 
-	internal let urlSession: URLSession
+	internal let urlSession: any PortainerURLSession
 
 	internal let logger = Logger(subsystem: PortainerClient.bundleIdentifier, category: "PortainerClient")
 	internal let wsQueue = DispatchQueue(label: PortainerClient.bundleIdentifier.appending(".WebSocket"), qos: .utility)
@@ -35,20 +35,28 @@ public class PortainerClient {
 
 	// MARK: init
 
-	public init(
+	public convenience init(
 		serverURL: URL? = nil,
 		token: String? = nil,
 		urlSessionConfiguration: URLSessionConfiguration = .default
 	) {
+		let delegate = PortainerClient.URLSessionDelegate()
+		let urlSession = URLSession(configuration: urlSessionConfiguration, delegate: delegate, delegateQueue: .current)
+		self.init(serverURL: serverURL, token: token, urlSession: urlSession)
+	}
+
+	private init(
+		serverURL: URL? = nil,
+		token: String? = nil,
+		urlSession: any PortainerURLSession
+	) {
 		self.serverURL = serverURL
 		self.token = token
-
-		let delegate = PortainerClient.URLSessionDelegate()
-		self.urlSession = .init(configuration: urlSessionConfiguration, delegate: delegate, delegateQueue: .current)
+		self.urlSession = urlSession
 	}
 }
 
-// MARK: - PortainerClient+Internal
+// MARK: - Internal
 
 internal extension PortainerClient {
 	func send<R: NetworkRequest>(_ networkRequest: R) async throws -> R.ResponseBody {
@@ -109,5 +117,22 @@ internal extension PortainerClient {
 		}
 
 		return nil
+	}
+}
+
+// MARK: - Tests
+
+internal extension PortainerClient {
+	/// Creates a ``PortainerClient`` with a mocked ``PortainerURLSession``, used by tests.
+	static func _forTests(
+		serverURL: URL? = nil,
+		token: String? = nil,
+		urlSession: some PortainerURLSession
+	) -> PortainerClient {
+		.init(
+			serverURL: serverURL,
+			token: token,
+			urlSession: urlSession
+		)
 	}
 }

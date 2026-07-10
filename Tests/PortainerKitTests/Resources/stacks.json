@@ -1,0 +1,83 @@
+[
+	{
+		"Id": 1,
+		"Name": "media",
+		"Type": 2,
+		"EndpointId": 1,
+		"SwarmId": "",
+		"EntryPoint": "docker-compose.yml",
+		"Env": [
+			{ "name": "PUID", "value": "1000" },
+			{ "name": "PGID", "value": "1000" }
+		],
+		"ResourceControl": {
+			"Id": 5,
+			"ResourceId": "media_stack",
+			"Type": 6,
+			"Public": false
+		},
+		"Status": 1,
+		"DeploymentStartStatus": 1,
+		"ProjectPath": "/data/compose/1",
+		"CreationDate": 1716900000,
+		"CreatedBy": "admin",
+		"UpdateDate": 1717000000,
+		"UpdatedBy": "admin",
+		"AdditionalFiles": [],
+		"FromAppTemplate": false,
+		"Namespace": "",
+		"GitConfig": {
+			"URL": "https://github.com/example/media-stack.git",
+			"ReferenceName": "refs/heads/main",
+			"ConfigFilePath": "docker-compose.yml"
+		},
+		"AutoUpdate": {
+			"Interval": "5m",
+			"Webhook": "05de31a2-79fa-4644-9c12-faa67e5c49f0",
+			"JobID": "15",
+			"ForceUpdate": false,
+			"ForcePullImage": true
+		}
+	},
+	{
+		"Id": 2,
+		"Name": "swarm_cluster",
+		"Type": 1,
+		"EndpointId": 1,
+		"SwarmId": "jpofkc0i9uo9wtx1zesuk649w",
+		"EntryPoint": "docker-stack.yml",
+		"Env": [],
+		"ResourceControl": null,
+		"Status": 1,
+		"DeploymentStartStatus": 1,
+		"ProjectPath": "/data/compose/2",
+		"CreationDate": 1700000000,
+		"CreatedBy": "admin",
+		"UpdateDate": 1700000500,
+		"UpdatedBy": "admin",
+		"AdditionalFiles": [],
+		"FromAppTemplate": false,
+		"Namespace": ""
+	},
+	{
+		"Id": 3,
+		"Name": "inactive_stack",
+		"Type": 2,
+		"EndpointId": 1,
+		"SwarmId": "",
+		"EntryPoint": "docker-compose.yml",
+		"Env": [
+			{ "name": "KEY", "value": "VALUE" }
+		],
+		"Status": 2,
+		"DeploymentStartStatus": 2,
+		"ProjectPath": "/data/compose/3",
+		"CreationDate": 1690000000,
+		"CreatedBy": "bob",
+		"UpdateDate": 1690000600,
+		"UpdatedBy": "bob",
+		"AdditionalFiles": [],
+		"FromAppTemplate": false,
+		"Namespace": ""
+	}
+]

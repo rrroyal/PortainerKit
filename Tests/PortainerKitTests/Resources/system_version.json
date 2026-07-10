@@ -1,0 +1,13 @@
+{
+	"LatestVersion": "2.20.0",
+	"ServerEdition": "CE",
+	"UpdateAvailable": true,
+	"build": {
+		"buildNumber": "12345",
+		"env": ["GOOS=linux", "GOARCH=amd64"],
+		"gitCommit": "a1b2c3d4",
+		"imageTag": "2.19.4-alpine"
+	},
+	"databaseVersion": "89",
+	"serverVersion": "2.19.4"
+}

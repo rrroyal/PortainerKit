@@ -1,0 +1,88 @@
+[
+	{
+		"Id": "8f3a1e2b9c4d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a",
+		"Names": ["/plex"],
+		"Image": "linuxserver/plex:latest",
+		"ImageID": "sha256:1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+		"Command": "/init",
+		"Created": 1717000000,
+		"Ports": [
+			{
+				"IP": "0.0.0.0",
+				"PrivatePort": 32400,
+				"PublicPort": 32400,
+				"Type": "tcp"
+			}
+		],
+		"Labels": {
+			"xyz.shameful.harbour.association_id": "plex",
+			"com.docker.compose.project": "media",
+			"com.docker.compose.service": "plex"
+		},
+		"State": "running",
+		"Status": "Up 3 days",
+		"Mounts": [
+			{
+				"Target": "/config",
+				"Source": "/var/lib/docker/volumes/plex_config/_data",
+				"Type": "volume",
+				"ReadOnly": false,
+				"Consistency": "default"
+			},
+			{
+				"Target": "/media",
+				"Source": "/mnt/media",
+				"Type": "bind",
+				"ReadOnly": true,
+				"Consistency": "default",
+				"BindOptions": {
+					"Propagation": "rprivate"
+				}
+			}
+		]
+	},
+	{
+		"Id": "1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c",
+		"Names": ["/postgres"],
+		"Image": "postgres:16-alpine",
+		"ImageID": "sha256:2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c",
+		"Command": "docker-entrypoint.sh postgres",
+		"Created": 1717001111,
+		"Ports": [
+			{
+				"IP": "127.0.0.1",
+				"PrivatePort": 5432,
+				"PublicPort": 5432,
+				"Type": "tcp"
+			}
+		],
+		"Labels": {
+			"com.docker.compose.project": "media",
+			"com.docker.compose.service": "postgres"
+		},
+		"State": "restarting",
+		"Status": "Restarting (1) 5 seconds ago",
+		"Mounts": [
+			{
+				"Target": "/var/lib/postgresql/data",
+				"Source": "/var/lib/docker/volumes/postgres_data/_data",
+				"Type": "volume",
+				"ReadOnly": false,
+				"Consistency": "default"
+			}
+		]
+	},
+	{
+		"Id": "3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d",
+		"Names": ["/old_cache"],
+		"Image": "redis:7-alpine",
+		"ImageID": "sha256:3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d",
+		"Command": "docker-entrypoint.sh redis-server",
+		"Created": 1710000000,
+		"Ports": [],
+		"Labels": {},
+		"State": "exited",
+		"Status": "Exited (0) 2 weeks ago",
+		"Mounts": []
+	}
+]

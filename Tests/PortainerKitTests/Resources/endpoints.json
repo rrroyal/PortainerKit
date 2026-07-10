@@ -1,0 +1,102 @@
+[
+	{
+		"Id": 1,
+		"Name": "local",
+		"Type": 1,
+		"ContainerEngine": "docker",
+		"URL": "unix:///var/run/docker.sock",
+		"GroupId": 1,
+		"PublicURL": "",
+		"TLS": false,
+		"TLSConfig": {
+			"TLS": false,
+			"TLSSkipVerify": false
+		},
+		"TLSCACert": "",
+		"TLSCert": "",
+		"TLSKey": "",
+		"Status": 1,
+		"Snapshots": [
+			{
+				"Time": 1717000000,
+				"DockerVersion": "26.1.4",
+				"Swarm": false,
+				"TotalCPU": 8,
+				"TotalMemory": 16777216000,
+				"RunningContainerCount": 6,
+				"StoppedContainerCount": 1,
+				"HealthyContainerCount": 5,
+				"UnhealthyContainerCount": 1,
+				"VolumeCount": 12,
+				"ImageCount": 20,
+				"ServiceCount": 0,
+				"StackCount": 3
+			}
+		],
+		"UserAccessPolicies": {},
+		"TeamAccessPolicies": {},
+		"TagIds": [1, 2],
+		"Tags": ["prod", "docker"],
+		"ComposeSyntaxMaxVersion": "3.9",
+		"SecuritySettings": {
+			"allowBindMountsForRegularUsers": true,
+			"allowPrivilegedModeForRegularUsers": true,
+			"allowHostNamespaceForRegularUsers": true,
+			"allowContainerCapabilitiesForRegularUsers": true,
+			"allowDeviceMappingForRegularUsers": true,
+			"allowSysctlSettingForRegularUsers": true,
+			"allowStackManagementForRegularUsers": true,
+			"enableHostManagementFeatures": false
+		},
+		"Kubernetes": {
+			"Configuration": {
+				"UseLoadBalancer": false,
+				"UseServerMetrics": false,
+				"EnableResourceOverCommit": false,
+				"ResourceOverCommitPercentage": 0,
+				"StorageClasses": [],
+				"IngressClasses": [],
+				"RestrictDefaultNamespace": false
+			},
+			"Snapshots": []
+		},
+		"EdgeCheckinInterval": 5,
+		"EdgeKey": "",
+		"Edge": {
+			"AsyncMode": false,
+			"PingInterval": 60,
+			"SnapshotInterval": 60,
+			"CommandInterval": 60
+		},
+		"Agent": {
+			"Version": ""
+		},
+		"LastCheckInDate": 1717000500
+	},
+	{
+		"Id": 2,
+		"Name": "remote-nas",
+		"Type": 2,
+		"ContainerEngine": "docker",
+		"URL": "tcp://10.0.0.5:9001",
+		"GroupId": 1,
+		"PublicURL": "10.0.0.5",
+		"TLS": true,
+		"Status": 2,
+		"TagIds": [],
+		"Tags": [],
+		"ComposeSyntaxMaxVersion": "3.9",
+		"EdgeCheckinInterval": 5,
+		"EdgeKey": "",
+		"Edge": {
+			"AsyncMode": false,
+			"PingInterval": 60,
+			"SnapshotInterval": 60,
+			"CommandInterval": 60
+		},
+		"Agent": {
+			"Version": "2.19.4"
+		},
+		"LastCheckInDate": 1716000000
+	}
+]

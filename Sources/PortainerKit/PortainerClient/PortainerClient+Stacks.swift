@@ -42,6 +42,15 @@ public extension PortainerClient {
 		return response
 	}
 
+	/// Starts/stops a stack using the endpoint associated with the stack itself.
+	/// - Parameters:
+	///   - stack: Stack to start/stop
+	///   - started: Should stack be started?
+	/// - Returns: Affected `Stack`, or nil if not modified
+	func setStackState(stack: Stack, started: Bool) async throws -> Stack? {
+		try await setStackState(stackID: stack.id, started: started, endpointID: stack.endpointID)
+	}
+
 	/// Fetches the Docker Compose file contents for specified stack ID.
 	/// - Parameter stackID: Stack ID to fetch the Docker Compose file contents for
 	/// - Returns: Docker Compose file contents
@@ -74,6 +83,15 @@ public extension PortainerClient {
 		return response
 	}
 
+	/// Updates a stack using the endpoint associated with the stack itself.
+	/// - Parameters:
+	///   - stack: Stack to update
+	///   - settings: Update settings
+	/// - Returns: Updated `Stack`
+	func updateStack(stack: Stack, settings: StackUpdateSettings) async throws -> Stack {
+		try await updateStack(stackID: stack.id, endpointID: stack.endpointID, settings: settings)
+	}
+
 	/// Removes a stack with specified `stackID`.
 	/// - Parameters:
 	///   - stackID: Stack ID to remove
@@ -82,5 +100,13 @@ public extension PortainerClient {
 	func removeStack(stackID: Stack.ID, endpointID: Endpoint.ID, external: Bool = false) async throws {
 		let request = StackRemoveRequest(stackID: stackID, endpointID: endpointID, external: external)
 		_ = try await send(request)
+	}
+
+	/// Removes a stack using the endpoint associated with the stack itself.
+	/// - Parameters:
+	///   - stack: Stack to remove
+	///   - external: Is this stack external?
+	func removeStack(stack: Stack, external: Bool = false) async throws {
+		try await removeStack(stackID: stack.id, endpointID: stack.endpointID, external: external)
 	}
 }

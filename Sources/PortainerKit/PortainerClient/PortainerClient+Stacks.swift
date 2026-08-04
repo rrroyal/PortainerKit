@@ -65,9 +65,13 @@ public extension PortainerClient {
 	///   - endpointID: Endpoint identifier
 	///   - settings: Deployment settings
 	/// - Returns: Newly created `Stack`
-	func deployStack(endpointID: Endpoint.ID, settings: some StackDeploymentSettings) async throws -> Stack {
+	func deployStack(
+		endpointID: Endpoint.ID,
+		settings: some StackDeploymentSettings,
+		progressHandler: TransferProgressHandler? = nil
+	) async throws -> Stack {
 		let request = StackDeployRequest(endpointID: endpointID, settings: settings)
-		let response = try await send(request)
+		let response = try await send(request, progressHandler: progressHandler)
 		return response
 	}
 
@@ -77,9 +81,14 @@ public extension PortainerClient {
 	///   - endpointID: Endpoint identifier
 	///   - settings: Update settings
 	/// - Returns: Updated `Stack`
-	func updateStack(stackID: Stack.ID, endpointID: Endpoint.ID, settings: StackUpdateSettings) async throws -> Stack {
+	func updateStack(
+		stackID: Stack.ID,
+		endpointID: Endpoint.ID,
+		settings: StackUpdateSettings,
+		progressHandler: TransferProgressHandler? = nil
+	) async throws -> Stack {
 		let request = StackUpdateRequest(stackID: stackID, endpointID: endpointID, settings: settings)
-		let response = try await send(request)
+		let response = try await send(request, progressHandler: progressHandler)
 		return response
 	}
 

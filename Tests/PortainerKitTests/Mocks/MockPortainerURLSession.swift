@@ -74,4 +74,22 @@ actor MockPortainerURLSession: PortainerURLSession {
 			throw error
 		}
 	}
+
+	func data(for request: URLRequest, progressHandler: TransferProgressHandler?) async throws -> (Data, URLResponse) {
+		if let requestBody = request.httpBody {
+			progressHandler?(.init(
+				direction: .request,
+				completedByteCount: Int64(requestBody.count),
+				expectedByteCount: Int64(requestBody.count)
+			))
+		}
+
+		let (data, response) = try await data(for: request)
+		progressHandler?(.init(
+			direction: .response,
+			completedByteCount: Int64(data.count),
+			expectedByteCount: Int64(data.count)
+		))
+		return (data, response)
+	}
 }

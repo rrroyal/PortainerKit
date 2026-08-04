@@ -12,7 +12,7 @@ import OSLog
 
 // MARK: - PortainerClient
 
-public class PortainerClient {
+public final class PortainerClient: Sendable {
 
 	// MARK: Static Properties
 
@@ -30,8 +30,8 @@ public class PortainerClient {
 
 	// MARK: - Public Properties
 
-	public var serverURL: URL?
-	public var token: String?
+	public let serverURL: URL?
+	public let token: String?
 
 	// MARK: init
 
@@ -54,12 +54,24 @@ public class PortainerClient {
 		self.token = token
 		self.urlSession = urlSession
 	}
+
+	/// Returns a client with immutable credentials that shares this client's transport.
+	public func configured(serverURL: URL?, token: String?) -> PortainerClient {
+		.init(serverURL: serverURL, token: token, urlSession: urlSession)
+	}
 }
 
 // MARK: - Internal
 
 internal extension PortainerClient {
 	func send<R: NetworkRequest>(_ networkRequest: R) async throws -> R.ResponseBody {
+		try await send(networkRequest, progressHandler: nil)
+	}
+
+	func send<R: NetworkRequest>(
+		_ networkRequest: R,
+		progressHandler: TransferProgressHandler?
+	) async throws -> R.ResponseBody {
 		guard let serverURL, let token else { throw ClientError.notSetup }
 
 		var urlRequest = try networkRequest.urlRequest(baseURL: serverURL)
@@ -72,7 +84,7 @@ internal extension PortainerClient {
 		#endif
 
 		do {
-			let (data, response) = try await urlSession.data(for: urlRequest)
+			let (data, response) = try await urlSession.data(for: urlRequest, progressHandler: progressHandler)
 
 			#if DEBUG
 			if UserDefaults.standard.bool(forKey: "PKLogNetworkResponses") {

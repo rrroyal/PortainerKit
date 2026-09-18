@@ -95,9 +95,7 @@ internal extension PortainerClient {
 			let decoded = try networkRequest.handleResponse(response, data: data)
 			return decoded
 		} catch {
-			#if DEBUG
 			logger.error("Network request failed: \(error, privacy: .public)")
-			#endif
 			throw error
 		}
 	}

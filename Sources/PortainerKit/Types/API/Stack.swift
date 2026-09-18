@@ -25,6 +25,7 @@ public struct Stack: Identifiable, Equatable, Codable, Sendable {
 		case updatedBy = "UpdatedBy"
 		case autoUpdate = "AutoUpdate"
 		case gitConfig = "GitConfig"
+		case deploymentStatus = "DeploymentStatus"
 	}
 
 	/// Stack Identifier
@@ -66,6 +67,10 @@ public struct Stack: Identifiable, Equatable, Codable, Sendable {
 	/// The git config of this stack
 	public let gitConfig: GitConfig?
 
+	/// Records the status progression of the current deployment.
+	/// Cleared when a new deployment starts.
+	public let deploymentStatus: [DeploymentStatus]?
+
 	public init(
 		id: Int,
 		name: String,
@@ -79,7 +84,8 @@ public struct Stack: Identifiable, Equatable, Codable, Sendable {
 		updateDate: Date? = nil,
 		updatedBy: String? = nil,
 		autoUpdate: AutoUpdate? = nil,
-		gitConfig: GitConfig? = nil
+		gitConfig: GitConfig? = nil,
+		deploymentStatus: [DeploymentStatus]? = nil
 	) {
 		self.id = id
 		self.name = name
@@ -94,6 +100,7 @@ public struct Stack: Identifiable, Equatable, Codable, Sendable {
 		self.updatedBy = updatedBy
 		self.autoUpdate = autoUpdate
 		self.gitConfig = gitConfig
+		self.deploymentStatus = deploymentStatus
 	}
 }
 
@@ -113,6 +120,8 @@ public extension Stack {
 	enum Status: Int, Equatable, Codable, Sendable {
 		case active = 1
 		case inactive = 2
+		case deploying = 3
+		case error = 4
 	}
 }
 
@@ -169,6 +178,18 @@ public extension Stack {
 //		public let Authentication: ?
 //		public let ConfigHash: String
 //		public let TLSSkipVerify: false
+	}
+}
+
+public extension Stack {
+	struct DeploymentStatus: Equatable, Codable, Hashable, Sendable {
+		enum CodingKeys: String, CodingKey {
+			case time = "Time"
+			case message = "Message"
+		}
+
+		public let time: Date
+		public let message: String?
 	}
 }
 

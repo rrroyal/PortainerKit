@@ -38,9 +38,10 @@ public final class PortainerClient: Sendable {
 	public convenience init(
 		serverURL: URL? = nil,
 		token: String? = nil,
-		urlSessionConfiguration: URLSessionConfiguration = .default
+		urlSessionConfiguration: URLSessionConfiguration = .default,
+		serverTrustPolicy: ServerTrustPolicy = .system
 	) {
-		let delegate = PortainerClient.URLSessionDelegate()
+		let delegate = PortainerClient.URLSessionDelegate(serverTrustPolicy: serverTrustPolicy)
 		let urlSession = URLSession(configuration: urlSessionConfiguration, delegate: delegate, delegateQueue: .current)
 		self.init(serverURL: serverURL, token: token, urlSession: urlSession)
 	}

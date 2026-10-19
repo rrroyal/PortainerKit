@@ -9,13 +9,30 @@
 import Foundation
 
 internal extension PortainerClient {
-	final class URLSessionDelegate: NSObject, Foundation.URLSessionDelegate {
+	final class URLSessionDelegate: NSObject, Foundation.URLSessionDelegate, Sendable {
+		private let serverTrustPolicy: ServerTrustPolicy
+
+		init(serverTrustPolicy: ServerTrustPolicy) {
+			self.serverTrustPolicy = serverTrustPolicy
+		}
+
 		func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge) async -> (URLSession.AuthChallengeDisposition, URLCredential?) {
-			if let trust = challenge.protectionSpace.serverTrust {
-				return (.useCredential, URLCredential(trust: trust))
-			} else {
-				return (.useCredential, nil)
+			let protectionSpace = challenge.protectionSpace
+			guard protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
+				  let trust = protectionSpace.serverTrust else {
+				return (.performDefaultHandling, nil)
 			}
+
+			if SecTrustEvaluateWithError(trust, nil) {
+				return (.performDefaultHandling, nil)
+			}
+
+			if let fingerprint = ServerTrustPolicy.certificateFingerprint(of: trust),
+			   serverTrustPolicy.isTrusted(protectionSpace.host, protectionSpace.port, fingerprint) {
+				return (.useCredential, URLCredential(trust: trust))
+			}
+
+			return (.performDefaultHandling, nil)
 		}
 	}
 

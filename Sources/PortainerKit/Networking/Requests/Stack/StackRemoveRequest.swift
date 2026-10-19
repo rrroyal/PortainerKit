@@ -36,17 +36,4 @@ extension StackRemoveRequest: NetworkRequest {
 
 		return queryItems
 	}
-
-	func handleResponse(_ response: URLResponse, data: Data) throws -> ResponseBody {
-		guard let response = response as? HTTPURLResponse else {
-			throw URLError(.cannotParseResponse)
-		}
-
-		if (200..<300) ~= response.statusCode {
-			return nil
-		} else {
-			let _: Never? = try PortainerClient.handleResponse(response, data: data)
-			throw PortainerClient.ClientError.responseCodeUnacceptable(response.statusCode)
-		}
-	}
 }

@@ -17,6 +17,24 @@ extension NetworkRequest {
 	}
 }
 
+// MARK: - NetworkRequest+Empty
+
+extension NetworkRequest where ResponseBody == Never? {
+	func handleResponse(_ response: URLResponse, data: Data) throws -> ResponseBody {
+		guard let response = response as? HTTPURLResponse else {
+			throw URLError(.cannotParseResponse)
+		}
+
+		// 304 - container is already in the requested state.
+		if (200..<300) ~= response.statusCode || response.statusCode == 304 {
+			return nil
+		} else {
+			let _: Never? = try PortainerClient.handleResponse(response, data: data)
+			throw PortainerClient.ClientError.responseCodeUnacceptable(response.statusCode)
+		}
+	}
+}
+
 // MARK: - NetworkRequest+urlRequest
 
 extension NetworkRequest {

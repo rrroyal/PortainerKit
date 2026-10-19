@@ -54,4 +54,13 @@ struct RequestTests {
 		#expect(unfiltered.url?.query?.contains("includeOrphanedStacks") == false)
 		#expect(filtered.url?.query?.contains("includeOrphanedStacks") == true)
 	}
+
+	@Test(.tags(.networkRequest, .containers))
+	func `Container action requests have no body`() throws {
+		let request = try ContainerActionRequest(containerID: Self.containerID, endpointID: Self.endpointID, action: .start)
+			.urlRequest(baseURL: Self.serverURL)
+
+		#expect(request.httpMethod == "POST")
+		#expect(request.httpBody == nil)
+	}
 }

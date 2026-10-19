@@ -76,8 +76,15 @@ public struct Endpoint: Codable, Equatable, Hashable, Identifiable, Sendable {
 
 public extension Endpoint {
 	enum Status: Int, Codable, Sendable {
+		case unknown = -1
 		case up = 1
 		case down
+
+		public init(from decoder: Decoder) throws {
+			let container = try decoder.singleValueContainer()
+			let rawValue = try container.decode(Status.RawValue.self)
+			self = Status(rawValue: rawValue) ?? Status.unknown
+		}
 	}
 }
 

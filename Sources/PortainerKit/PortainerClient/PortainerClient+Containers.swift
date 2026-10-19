@@ -16,7 +16,7 @@ public extension PortainerClient {
 	func fetchContainers(endpointID: Endpoint.ID, filters: FetchFilters? = nil) async throws -> [Container] {
 		let request = ContainersRequest(endpointID: endpointID, filters: filters)
 		let response = try await send(request)
-		return response
+		return response.decodedValues()
 	}
 
 	/// Convenience function; fetches all of the containers belonging to the specified `stackName`.

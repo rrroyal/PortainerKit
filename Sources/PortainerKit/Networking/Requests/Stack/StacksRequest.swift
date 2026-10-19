@@ -19,7 +19,7 @@ struct StacksRequest {
 // MARK: - StacksRequest+NetworkRequest
 
 extension StacksRequest: NetworkRequest {
-	typealias ResponseBody = [Stack]
+	typealias ResponseBody = [FailableDecodable<Stack>]
 
 	var method: HTTPMethod { .get }
 	var path: String { "/api/stacks" }

@@ -15,6 +15,6 @@ public extension PortainerClient {
 	func fetchEndpoints() async throws -> [Endpoint] {
 		let request = EndpointsRequest()
 		let response = try await send(request)
-		return response
+		return response.decodedValues()
 	}
 }

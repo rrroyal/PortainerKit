@@ -64,6 +64,25 @@ public struct Container: Identifiable, Codable, Sendable {
 	}
 }
 
+// MARK: - Container+Decodable
+
+public extension Container {
+	init(from decoder: any Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		self.id = try container.decode(String.self, forKey: .id)
+		self.names = try container.decodeIfPresent([String].self, forKey: .names)
+		self.image = try container.decodeIfPresent(String.self, forKey: .image)
+		self.imageID = try container.decodeIfPresent(String.self, forKey: .imageID)
+		self.command = try container.decodeIfPresent(String.self, forKey: .command)
+		self.created = try container.decodeIfPresent(Date.self, forKey: .created)
+		self.ports = try container.decodeFailableArrayIfPresent([Port].self, forKey: .ports)
+		self.labels = try container.decodeIfPresent([String: String].self, forKey: .labels)
+		self.state = try container.decodeIfPresent(Container.State.self, forKey: .state)
+		self.status = try container.decodeIfPresent(String.self, forKey: .status)
+		self.mounts = try container.decodeFailableArrayIfPresent([Mount].self, forKey: .mounts)
+	}
+}
+
 // MARK: - Container+State
 
 public extension Container {

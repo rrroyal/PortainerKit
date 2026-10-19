@@ -41,6 +41,26 @@ struct ContainerDecodingTests {
 		#expect(exited.state == .exited)
 	}
 
+	@Test("Drops undecodable containers and container entries instead of failing the whole list")
+	func decodeContainersDropsUndecodableEntries() async throws {
+		let json = """
+		[
+			{ "Id": "sctp", "Ports": [{ "PrivatePort": 5000, "Type": "sctp" }, { "PrivatePort": 80, "Type": "quic" }] },
+			{ "Id": "npipe", "Mounts": [{ "Type": "npipe", "Source": "//./pipe/docker_engine", "Destination": "//./pipe/docker_engine" }] },
+			"garbage",
+			{ "Names": ["/no-id"] }
+		]
+		"""
+		let (client, session) = try Support.makeClient()
+		await session.setBehavior(.respond(data: Data(json.utf8)))
+
+		let containers = try await client.fetchContainers(endpointID: Support.endpointID)
+
+		#expect(containers.map(\.id) == ["sctp", "npipe"])
+		#expect(containers[0].ports?.map(\.type) == [.sctp])
+		#expect(containers[1].mounts?.first?.type == .npipe)
+	}
+
 	@Test("Decodes low-level container details from a real Docker inspect payload")
 	func decodeContainerDetails() async throws {
 		let (client, session) = try Support.makeClient()

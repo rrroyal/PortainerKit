@@ -17,6 +17,7 @@ public struct Port: Equatable, Hashable, Codable, Sendable {
 	public enum PortType: String, CaseIterable, Hashable, Codable, Sendable {
 		case tcp
 		case udp
+		case sctp
 	}
 
 	public let ip: String?

@@ -5,6 +5,7 @@
 //  Created by Copilot on 07/07/2026.
 //
 
+import Foundation
 @testable import PortainerKit
 import Testing
 
@@ -33,5 +34,17 @@ struct EndpointDecodingTests {
 		let remote = try #require(endpoints.first { $0.id == 2 })
 		#expect(remote.name == "remote-nas")
 		#expect(remote.status == .down)
+	}
+
+	@Test("Decodes unknown environment statuses and drops undecodable environments")
+	func decodeEndpointsWithUnknownValues() async throws {
+		let json = #"[{ "Id": 1, "Status": 3 }, { "Name": "no-id" }]"#
+		let (client, session) = try Support.makeClient()
+		await session.setBehavior(.respond(data: Data(json.utf8)))
+
+		let endpoints = try await client.fetchEndpoints()
+
+		#expect(endpoints.map(\.id) == [1])
+		#expect(endpoints.first?.status == .unknown)
 	}
 }

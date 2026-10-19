@@ -15,7 +15,7 @@ struct EndpointsRequest { }
 // MARK: - EndpointsRequest+NetworkRequest
 
 extension EndpointsRequest: NetworkRequest {
-	typealias ResponseBody = [Endpoint]
+	typealias ResponseBody = [FailableDecodable<Endpoint>]
 
 	var method: HTTPMethod { .get }
 	var path: String { "/api/endpoints" }

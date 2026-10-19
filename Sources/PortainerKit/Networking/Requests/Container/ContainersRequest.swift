@@ -21,7 +21,7 @@ struct ContainersRequest {
 // MARK: - ContainersRequest+NetworkRequest
 
 extension ContainersRequest: NetworkRequest {
-	typealias ResponseBody = [Container]
+	typealias ResponseBody = [FailableDecodable<Container>]
 
 	var method: HTTPMethod { .get }
 	var path: String { "/api/endpoints/\(endpointID)/docker/containers/json" }

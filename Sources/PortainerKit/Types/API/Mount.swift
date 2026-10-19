@@ -35,6 +35,9 @@ public extension Mount {
 	enum MountType: String, Equatable, Codable, Sendable {
 		case bind
 		case volume
+		case image
 		case tmpfs
+		case npipe
+		case cluster
 	}
 }

@@ -18,7 +18,7 @@ public extension PortainerClient {
 	func fetchStacks(endpointID: Endpoint.ID?, includeOrphaned: Bool) async throws -> [Stack] {
 		let request = StacksRequest(endpointID: endpointID, includeOrphanedStacks: includeOrphaned)
 		let response = try await send(request)
-		return response
+		return response.decodedValues()
 	}
 
 	/// Fetches the stack with specified ID.

@@ -42,6 +42,8 @@ public final class PortainerClient: Sendable {
 		serverTrustPolicy: ServerTrustPolicy = .system
 	) {
 		let delegate = PortainerClient.URLSessionDelegate(serverTrustPolicy: serverTrustPolicy)
+		// Responses may contain secrets (e.g. stack env variables) - don't cache them on disk.
+		urlSessionConfiguration.urlCache = nil
 		let urlSession = URLSession(configuration: urlSessionConfiguration, delegate: delegate, delegateQueue: .current)
 		self.init(serverURL: serverURL, token: token, urlSession: urlSession)
 	}

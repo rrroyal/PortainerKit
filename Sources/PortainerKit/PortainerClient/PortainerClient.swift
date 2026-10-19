@@ -17,7 +17,6 @@ public final class PortainerClient: Sendable {
 	// MARK: Static Properties
 
 	private static let jsonDecoder = JSONDecoder.portainer
-	private static let jsonEncoder = JSONEncoder.portainer
 
 	public static let bundleIdentifier = "xyz.shameful.PortainerKit"
 
@@ -26,7 +25,6 @@ public final class PortainerClient: Sendable {
 	internal let urlSession: any PortainerURLSession
 
 	internal let logger = Logger(subsystem: PortainerClient.bundleIdentifier, category: "PortainerClient")
-	internal let wsQueue = DispatchQueue(label: PortainerClient.bundleIdentifier.appending(".WebSocket"), qos: .utility)
 
 	// MARK: - Public Properties
 

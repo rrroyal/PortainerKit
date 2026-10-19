@@ -15,7 +15,6 @@ struct ContainerActionRequest {
 	var containerID: Container.ID
 	var endpointID: Endpoint.ID
 	var action: ContainerAction
-	var signal: String?
 }
 
 // MARK: - ContainerActionRequest+NetworkRequest
@@ -25,14 +24,4 @@ extension ContainerActionRequest: NetworkRequest {
 
 	var method: HTTPMethod { .post }
 	var path: String { "/api/endpoints/\(endpointID)/docker/containers/\(containerID)/\(action.rawValue)" }
-
-	var queryItems: [URLQueryItem]? {
-		var queryItems: [URLQueryItem] = []
-
-		if let signal {
-			queryItems.append(.init(name: "signal", value: signal))
-		}
-
-		return queryItems
-	}
 }

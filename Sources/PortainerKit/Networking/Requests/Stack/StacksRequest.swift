@@ -28,7 +28,8 @@ extension StacksRequest: NetworkRequest {
 		get throws {
 			let filters = FetchFilters(
 				endpointID: endpointID,
-				includeOrphanedStacks: includeOrphanedStacks
+				// Portainer ignores it without an endpoint filter and rejects it for non-admins.
+				includeOrphanedStacks: endpointID != nil ? includeOrphanedStacks : nil
 			)
 
 			let filtersEncoded = try JSONEncoder.portainer.encode(filters)

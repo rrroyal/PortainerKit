@@ -45,4 +45,13 @@ struct RequestTests {
 		#expect(updateRequest.url?.absoluteString == "http://localhost:9443/api/stacks/0?endpointId=999")
 		#expect(removeRequest.url?.absoluteString == "http://localhost:9443/api/stacks/0?endpointId=999")
 	}
+
+	@Test(.tags(.networkRequest, .stacks, .regression))
+	func `Stacks request only includes orphaned stacks with an endpoint filter`() throws {
+		let unfiltered = try StacksRequest(endpointID: nil, includeOrphanedStacks: true).urlRequest(baseURL: Self.serverURL)
+		let filtered = try StacksRequest(endpointID: Self.endpointID, includeOrphanedStacks: true).urlRequest(baseURL: Self.serverURL)
+
+		#expect(unfiltered.url?.query?.contains("includeOrphanedStacks") == false)
+		#expect(filtered.url?.query?.contains("includeOrphanedStacks") == true)
+	}
 }

@@ -98,7 +98,11 @@ internal extension PortainerClient {
 			let decoded = try networkRequest.handleResponse(response, data: data)
 			return decoded
 		} catch {
-			logger.error("Network request failed: \(error, privacy: .public)")
+			if !(error is CancellationError) && (error as? URLError)?.code != .cancelled {
+				// Error descriptions may contain the server URL - only log domain and code publicly.
+				let nsError = error as NSError
+				logger.error("Network request failed: \(nsError.domain, privacy: .public) \(nsError.code, privacy: .public) (\(error, privacy: .private))")
+			}
 			throw error
 		}
 	}

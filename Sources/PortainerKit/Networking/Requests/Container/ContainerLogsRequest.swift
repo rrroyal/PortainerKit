@@ -75,17 +75,28 @@ extension ContainerLogsRequest: NetworkRequest {
 			throw error
 		}
 
-		let encodings: [String.Encoding] = [
-			.utf8,
-			.ascii,
-			.isoLatin1
-		]
-		for encoding in encodings {
-			if let string = String(data: data, encoding: encoding) {
-				return string
-			}
+		// Lossy on purpose - invalid UTF-8 in logs shouldn't fail the whole request.
+		// swiftlint:disable:next optional_data_string_conversion
+		return String(decoding: Self.demultiplexed(data), as: UTF8.self)
+	}
+
+	/// Strips the 8-byte frame headers (`[stream, 0, 0, 0, size (UInt32, big-endian)]`) Docker adds to non-TTY logs.
+	/// TTY logs aren't framed and are returned as-is.
+	static func demultiplexed(_ data: Data) -> Data {
+		let bytes = [UInt8](data)
+		guard bytes.count >= 8, bytes[0] <= 2, bytes[1...3].allSatisfy({ $0 == 0 }) else {
+			return data
 		}
 
-		throw PortainerClient.ClientError.decodingFailed
+		var payload = Data(capacity: bytes.count)
+		var offset = 0
+		while offset + 8 <= bytes.count {
+			let size = bytes[(offset + 4)..<(offset + 8)].reduce(0) { $0 << 8 | Int($1) }
+			let start = offset + 8
+			let end = min(start + size, bytes.count)
+			payload.append(contentsOf: bytes[start..<end])
+			offset = end
+		}
+		return payload
 	}
 }

@@ -5,7 +5,6 @@ import Testing
 
 @Suite
 struct RequestTests {
-	// swiftlint:disable:next force_unwrapping
 	private static let serverURL = URL(string: "http://localhost:9443")!
 	private static let endpointID: Endpoint.ID = 42
 	private static let containerID: Container.ID = ":containerID"
@@ -49,7 +48,8 @@ struct RequestTests {
 	@Test(.tags(.networkRequest, .stacks, .regression))
 	func `Stacks request only includes orphaned stacks with an endpoint filter`() throws {
 		let unfiltered = try StacksRequest(endpointID: nil, includeOrphanedStacks: true).urlRequest(baseURL: Self.serverURL)
-		let filtered = try StacksRequest(endpointID: Self.endpointID, includeOrphanedStacks: true).urlRequest(baseURL: Self.serverURL)
+		let filtered = try StacksRequest(endpointID: Self.endpointID, includeOrphanedStacks: true)
+			.urlRequest(baseURL: Self.serverURL)
 
 		#expect(unfiltered.url?.query?.contains("includeOrphanedStacks") == false)
 		#expect(filtered.url?.query?.contains("includeOrphanedStacks") == true)

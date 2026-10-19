@@ -10,9 +10,9 @@ public struct SystemVersion: Equatable, Codable, Sendable {
 		case latestVersion = "LatestVersion"
 		case serverEdition = "ServerEdition"
 		case updateAvailable = "UpdateAvailable"
-		case build
-		case databaseVersion = "databaseVersion"
-		case serverVersion = "serverVersion"
+		case build = "Build"
+		case databaseVersion = "DatabaseVersion"
+		case serverVersion = "ServerVersion"
 	}
 
 	public let latestVersion: String?
@@ -25,8 +25,13 @@ public struct SystemVersion: Equatable, Codable, Sendable {
 
 public extension SystemVersion {
 	struct Build: Equatable, Codable, Sendable {
+		enum CodingKeys: String, CodingKey {
+			case buildNumber = "BuildNumber"
+			case gitCommit = "GitCommit"
+			case imageTag = "ImageTag"
+		}
+
 		public let buildNumber: String
-		public let env: [String]
 		public let gitCommit: String
 		public let imageTag: String
 	}

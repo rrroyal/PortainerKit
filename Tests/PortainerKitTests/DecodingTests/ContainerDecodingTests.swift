@@ -33,6 +33,8 @@ struct ContainerDecodingTests {
 		#expect(plex.labels?["com.docker.compose.project"] == "media")
 		#expect(plex.ports?.first?.privatePort == 32400)
 		#expect(plex.mounts?.count == 2)
+		#expect(plex.mounts?.last?.destination == "/media")
+		#expect(plex.mounts?.last?.rw == false)
 
 		let restarting = try #require(containers.first { $0.names == ["/postgres"] })
 		#expect(restarting.state == .restarting)
@@ -79,6 +81,7 @@ struct ContainerDecodingTests {
 		#expect(details.mounts.count == 2)
 		#expect(details.hostConfig.devices?.first?.pathOnHost == "/dev/dri")
 		#expect(details.hostConfig.portBindings?["32400/tcp"]?.first?.hostPort == "32400")
+		#expect(details.hostConfig.portBindings?["32400/tcp"]?.first?.hostIP == "0.0.0.0")
 	}
 
 	@Test("Throws a decoding error when the container details response doesn't match the expected shape")

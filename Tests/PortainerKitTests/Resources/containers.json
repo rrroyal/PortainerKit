@@ -23,21 +23,22 @@
 		"Status": "Up 3 days",
 		"Mounts": [
 			{
-				"Target": "/config",
-				"Source": "/var/lib/docker/volumes/plex_config/_data",
 				"Type": "volume",
-				"ReadOnly": false,
-				"Consistency": "default"
+				"Name": "plex_config",
+				"Source": "/var/lib/docker/volumes/plex_config/_data",
+				"Destination": "/config",
+				"Driver": "local",
+				"Mode": "z",
+				"RW": true,
+				"Propagation": ""
 			},
 			{
-				"Target": "/media",
-				"Source": "/mnt/media",
 				"Type": "bind",
-				"ReadOnly": true,
-				"Consistency": "default",
-				"BindOptions": {
-					"Propagation": "rprivate"
-				}
+				"Source": "/mnt/media",
+				"Destination": "/media",
+				"Mode": "ro",
+				"RW": false,
+				"Propagation": "rprivate"
 			}
 		]
 	},
@@ -64,11 +65,14 @@
 		"Status": "Restarting (1) 5 seconds ago",
 		"Mounts": [
 			{
-				"Target": "/var/lib/postgresql/data",
-				"Source": "/var/lib/docker/volumes/postgres_data/_data",
 				"Type": "volume",
-				"ReadOnly": false,
-				"Consistency": "default"
+				"Name": "postgres_data",
+				"Source": "/var/lib/docker/volumes/postgres_data/_data",
+				"Destination": "/var/lib/postgresql/data",
+				"Driver": "local",
+				"Mode": "z",
+				"RW": true,
+				"Propagation": ""
 			}
 		]
 	},

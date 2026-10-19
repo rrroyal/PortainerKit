@@ -15,7 +15,6 @@ public struct ContainerConfig: Codable, Equatable, Sendable {
 		case tty = "Tty"
 		case env = "Env"
 		case cmd = "Cmd"
-		case healthCheck = "HealthCheck"
 		case argsEscaped = "ArgsEscaped"
 		case image = "Image"
 		case volumes = "Volumes"
@@ -36,7 +35,6 @@ public struct ContainerConfig: Codable, Equatable, Sendable {
 	public let tty: Bool
 	public let env: [String]
 	public let cmd: [String]?
-	public let healthCheck: HealthConfig?
 	public let argsEscaped: Bool?
 	public let image: String
 	public let volumes: [String: [String: String]]?

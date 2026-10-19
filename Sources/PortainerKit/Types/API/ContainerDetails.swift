@@ -157,7 +157,7 @@ public extension ContainerDetails {
 public extension ContainerDetails.HostConfig {
 	struct PortBinding: Codable, Equatable, Sendable {
 		enum CodingKeys: String, CodingKey {
-			case hostIP = "HostIP"
+			case hostIP = "HostIp"
 			case hostPort = "HostPort"
 		}
 

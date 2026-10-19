@@ -36,5 +36,8 @@ struct SystemDecodingTests {
 		#expect(version.serverEdition == "CE")
 		#expect(version.updateAvailable)
 		#expect(version.build?.gitCommit == "a1b2c3d4")
+		#expect(version.build?.buildNumber == "12345")
+		#expect(version.serverVersion == "2.19.4")
+		#expect(version.databaseVersion == "2.19.4")
 	}
 }

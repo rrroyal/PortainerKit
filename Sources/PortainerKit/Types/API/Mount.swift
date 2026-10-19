@@ -8,30 +8,27 @@
 
 public struct Mount: Equatable, Codable, Sendable {
 	enum CodingKeys: String, CodingKey {
-		case target = "Target"
-		case source = "Source"
 		case type = "Type"
-		case readOnly = "ReadOnly"
-		case consistency = "Consistency"
-		case bindOptions = "BindOptions"
+		case name = "Name"
+		case source = "Source"
+		case destination = "Destination"
+		case driver = "Driver"
+		case mode = "Mode"
+		case rw = "RW"
+		case propagation = "Propagation"
 	}
 
-	public let target: String?
-	public let source: String?
 	public let type: MountType?
-	public let readOnly: Bool?
-	public let consistency: Consistency?
-	public let bindOptions: BindOptions?
+	public let name: String?
+	public let source: String?
+	public let destination: String?
+	public let driver: String?
+	public let mode: String?
+	public let rw: Bool?
+	public let propagation: String?
 }
 
 public extension Mount {
-	enum Consistency: String, Equatable, Codable, Sendable {
-		case `default`
-		case consistent
-		case cached
-		case delegated
-	}
-
 	enum MountType: String, Equatable, Codable, Sendable {
 		case bind
 		case volume

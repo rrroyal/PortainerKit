@@ -8,7 +8,7 @@
 public struct SystemStatus: Equatable, Codable, Sendable {
 	enum CodingKeys: String, CodingKey {
 		case version = "Version"
-		case instanceID
+		case instanceID = "InstanceID"
 	}
 
 	public let version: String

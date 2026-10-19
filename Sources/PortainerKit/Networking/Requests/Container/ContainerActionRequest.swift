@@ -42,7 +42,7 @@ extension ContainerActionRequest: NetworkRequestWithBody {
 			throw URLError(.cannotParseResponse)
 		}
 
-		if (200..<400) ~= response.statusCode {
+		if (200..<300) ~= response.statusCode || response.statusCode == 304 {
 			return nil
 		} else {
 			let _: Never? = try PortainerClient.handleResponse(response, data: data)

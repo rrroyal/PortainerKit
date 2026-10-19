@@ -9,7 +9,7 @@
 import Foundation
 
 internal extension PortainerClient {
-	final class URLSessionDelegate: NSObject, Foundation.URLSessionDelegate, Sendable {
+	final class URLSessionDelegate: NSObject, URLSessionTaskDelegate, Sendable {
 		private let serverTrustPolicy: ServerTrustPolicy
 
 		init(serverTrustPolicy: ServerTrustPolicy) {
@@ -33,6 +33,20 @@ internal extension PortainerClient {
 			}
 
 			return (.performDefaultHandling, nil)
+		}
+
+		/// Only follows redirects to the same origin, so the API key isn't sent to other servers.
+		func urlSession(
+			_ session: URLSession,
+			task: URLSessionTask,
+			willPerformHTTPRedirection response: HTTPURLResponse,
+			newRequest request: URLRequest
+		) async -> URLRequest? {
+			guard let originalURL = task.originalRequest?.url, let newURL = request.url else { return nil }
+			let isSameOrigin = originalURL.scheme?.lowercased() == newURL.scheme?.lowercased()
+				&& originalURL.host()?.lowercased() == newURL.host()?.lowercased()
+				&& originalURL.port == newURL.port
+			return isSameOrigin ? request : nil
 		}
 	}
 

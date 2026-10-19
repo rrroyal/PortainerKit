@@ -47,4 +47,20 @@ struct ErrorHandlingDecodingTests {
 			Issue.record("Expected ClientError.responseCodeUnacceptable, but got \(error) instead.")
 		}
 	}
+
+	@Test("Treats unfollowed redirects as failures, but container actions accept 304 Not Modified")
+	func redirectStatusCodes() async throws {
+		let (client, session) = try Support.makeClient()
+
+		await session.setBehavior(.respond(data: Data(), statusCode: 302))
+		await #expect(throws: PortainerClient.ClientError.self) {
+			try await client.executeContainerAction(.start, containerID: Support.containerID, endpointID: Support.endpointID)
+		}
+		await #expect(throws: PortainerClient.ClientError.self) {
+			try await client.removeContainer(containerID: Support.containerID, endpointID: Support.endpointID)
+		}
+
+		await session.setBehavior(.respond(data: Data(), statusCode: 304))
+		try await client.executeContainerAction(.start, containerID: Support.containerID, endpointID: Support.endpointID)
+	}
 }

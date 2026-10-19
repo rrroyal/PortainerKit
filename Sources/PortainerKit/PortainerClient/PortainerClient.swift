@@ -119,7 +119,7 @@ internal extension PortainerClient {
 		// ...if not, get the response status code...
 		if let urlResponse = response as? HTTPURLResponse {
 			// ...throw response code
-			if !(200..<400 ~= urlResponse.statusCode) {
+			if !(200..<300 ~= urlResponse.statusCode) {
 				return ClientError.responseCodeUnacceptable(urlResponse.statusCode)
 			}
 		} else {

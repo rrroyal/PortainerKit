@@ -71,7 +71,7 @@ extension ContainerLogsRequest: NetworkRequest {
 	}
 
 	func handleResponse(_ response: URLResponse, data: Data) throws -> ResponseBody {
-		if !((200..<400) ~= ((response as? HTTPURLResponse)?.statusCode ?? 0)), let error = PortainerClient.handleErrorResponse(response, data: data) {
+		if !((200..<300) ~= ((response as? HTTPURLResponse)?.statusCode ?? 0)), let error = PortainerClient.handleErrorResponse(response, data: data) {
 			throw error
 		}
 

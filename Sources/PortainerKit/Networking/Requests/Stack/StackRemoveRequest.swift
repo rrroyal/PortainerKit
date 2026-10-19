@@ -42,7 +42,7 @@ extension StackRemoveRequest: NetworkRequest {
 			throw URLError(.cannotParseResponse)
 		}
 
-		if (200..<400) ~= response.statusCode {
+		if (200..<300) ~= response.statusCode {
 			return nil
 		} else {
 			let _: Never? = try PortainerClient.handleResponse(response, data: data)
